@@ -895,6 +895,11 @@
         </select>
       </div>
 
+	  <div class="form-group">
+        <label>Quantity:</label>
+        <input type="number" id="singleQty" value="1" min="1" oninput="updateSinglePreview()">
+      </div>
+	  
       <p class="price-tag" id="singlePriceDisplay">₱15.00</p>
       
       <div class="form-group">
@@ -938,6 +943,11 @@
         </select>
       </div>
 
+		<div class="form-group">
+        <label>Quantity:</label>
+        <input type="number" id="plateQty" value="1" min="1" oninput="updatePlatePreview()">
+      </div>
+	  
       <p class="price-tag" id="platePrice">₱50.00</p>
       <p class="price-note">Base price (4 letters). +₱15 per extra letter.</p>
 
@@ -1241,7 +1251,6 @@
 
     // --- PREVIEW LOGIC ---
     function updateSinglePreview() {
-      // Allows standard letters, numbers, and symbols, but destroys fancy Unicode phone fonts
       let letter = document.getElementById('singleInput').value.replace(/[^\x20-\x7E]/g, '').toUpperCase();
       document.getElementById('singleInput').value = letter; 
       
@@ -1255,8 +1264,9 @@
       document.getElementById('singleLoop').setAttribute('stroke', bg);
       document.getElementById('singleLoop').style.display = letter ? "block" : "none";
 
-      let cost = 15 + getExtraCost('singleBg') + getExtraCost('singleFg');
-      document.getElementById('singlePriceDisplay').innerText = "₱" + cost + ".00";
+      let qty = Math.max(1, parseInt(document.getElementById('singleQty').value) || 1);
+      let unitCost = 15 + getExtraCost('singleBg') + getExtraCost('singleFg');
+      document.getElementById('singlePriceDisplay').innerText = "₱" + (unitCost * qty) + ".00";
     }
 
     function calculatePlatePrice() {
@@ -1267,7 +1277,6 @@
     }
 
     function updatePlatePreview() {
-      // The regex /[^\x20-\x7E]/g allows normal keyboard typing but blocks fancy phone fonts
       let text = document.getElementById('plateInput').value.replace(/[^\x20-\x7E]/g, '').trim().toUpperCase();
       document.getElementById('plateInput').value = text;
       
@@ -1289,7 +1298,9 @@
       svgCanvas.setAttribute('width', finalWidth);
       svgCanvas.setAttribute('viewBox', `0 0 ${finalWidth} 120`);
 
-      document.getElementById('platePrice').innerText = "₱" + calculatePlatePrice() + ".00";
+      let qty = Math.max(1, parseInt(document.getElementById('plateQty').value) || 1);
+      let unitCost = calculatePlatePrice();
+      document.getElementById('platePrice').innerText = "₱" + (unitCost * qty) + ".00";
     }
 
     function updateFlexiPreview() {
@@ -1316,20 +1327,25 @@
 
     // --- CART LOGIC ---
     function addToCart(type) {
+      let newItem = null;
+
       if(type === 'single') {
         let letter = document.getElementById('singleInput').value.trim().toUpperCase();
         if(!letter) { showToast("Please type a letter."); return; }
         let bg = document.getElementById('singleBg').options[document.getElementById('singleBg').selectedIndex].text;
         let fg = document.getElementById('singleFg').options[document.getElementById('singleFg').selectedIndex].text;
-        let cost = 15 + getExtraCost('singleBg') + getExtraCost('singleFg');
-        myCart.push({ name: `Single Letter (${letter})`, details: `BG: ${bg}, Text: ${fg}`, price: cost });
+        let unitPrice = 15 + getExtraCost('singleBg') + getExtraCost('singleFg');
+        let qty = Math.max(1, parseInt(document.getElementById('singleQty').value) || 1);
+        newItem = { baseName: `Single Letter (${letter})`, details: `BG: ${bg}, Text: ${fg}`, unitPrice: unitPrice, qty: qty };
       } 
       else if(type === 'plate') {
         let text = document.getElementById('plateInput').value.trim().toUpperCase();
         if(!text) { showToast("Please type a name."); return; }
         let bg = document.getElementById('plateBg').options[document.getElementById('plateBg').selectedIndex].text;
         let fg = document.getElementById('plateFg').options[document.getElementById('plateFg').selectedIndex].text;
-        myCart.push({ name: `Nameplate (${text})`, details: `BG: ${bg}, Text: ${fg}`, price: calculatePlatePrice() });
+        let unitPrice = calculatePlatePrice();
+        let qty = Math.max(1, parseInt(document.getElementById('plateQty').value) || 1);
+        newItem = { baseName: `Nameplate (${text})`, details: `BG: ${bg}, Text: ${fg}`, unitPrice: unitPrice, qty: qty };
       }
       else if(type === 'flexi') {
         let modelDropdown = document.getElementById('flexiModel');
@@ -1338,11 +1354,22 @@
         let colorCost = getExtraCost('flexiColor');
         let colorText = document.getElementById('flexiColor').options[document.getElementById('flexiColor').selectedIndex].text;
         let qty = parseInt(document.getElementById('flexiQty').value);
-        myCart.push({ name: `${qty}x ${modelName}`, details: `Color: ${colorText}`, price: (qty * (basePrice + colorCost)) });
+        newItem = { baseName: modelName, details: `Color: ${colorText}`, unitPrice: (basePrice + colorCost), qty: qty };
       }
-      
-      document.getElementById('cartBadge').innerText = myCart.length;
-      showToast("Added to cart! 🛒");
+
+      if (newItem) {
+        // Group identical items together
+        let existingIndex = myCart.findIndex(item => item.baseName === newItem.baseName && item.details === newItem.details);
+        if (existingIndex > -1) {
+          myCart[existingIndex].qty += newItem.qty;
+        } else {
+          myCart.push(newItem);
+        }
+        
+        let totalItems = myCart.reduce((sum, item) => sum + item.qty, 0);
+        document.getElementById('cartBadge').innerText = totalItems;
+        showToast("Added to cart! 🛒");
+      }
     }
 
     function orderDirect(type) {
@@ -1353,10 +1380,11 @@
         if(!customerName) { showToast("Please enter your name."); return; }
         let bg = document.getElementById('singleBg').options[document.getElementById('singleBg').selectedIndex].text;
         let fg = document.getElementById('singleFg').options[document.getElementById('singleFg').selectedIndex].text;
-        let cost = 15 + getExtraCost('singleBg') + getExtraCost('singleFg');
+        let unitCost = 15 + getExtraCost('singleBg') + getExtraCost('singleFg');
+        let qty = Math.max(1, parseInt(document.getElementById('singleQty').value) || 1);
         
         let customerDetails = `Name: ${customerName}\nFulfillment: Direct Order (Contact for delivery)`;
-        let orderData = `ORDER: Single Letter (${letter})\nBG: ${bg} | Text: ${fg}\n\nTotal: ₱${cost}`;
+        let orderData = `ORDER: ${qty}x Single Letter (${letter})\nBG: ${bg} | Text: ${fg}\n\nTotal: ₱${unitCost * qty}`;
         sendToGoogleForm(customerDetails, orderData);
       } 
       else if(type === 'plate') {
@@ -1366,10 +1394,11 @@
         if(!customerName) { showToast("Please enter your name."); return; }
         let bg = document.getElementById('plateBg').options[document.getElementById('plateBg').selectedIndex].text;
         let fg = document.getElementById('plateFg').options[document.getElementById('plateFg').selectedIndex].text;
-        let cost = calculatePlatePrice();
+        let unitCost = calculatePlatePrice();
+        let qty = Math.max(1, parseInt(document.getElementById('plateQty').value) || 1);
         
         let customerDetails = `Name: ${customerName}\nFulfillment: Direct Order (Contact for delivery)`;
-        let orderData = `ORDER: Nameplate (${text})\nBG: ${bg} | Text: ${fg}\n\nTotal: ₱${cost}`;
+        let orderData = `ORDER: ${qty}x Nameplate (${text})\nBG: ${bg} | Text: ${fg}\n\nTotal: ₱${unitCost * qty}`;
         sendToGoogleForm(customerDetails, orderData);
       }
       else if(type === 'flexi') {
@@ -1396,7 +1425,8 @@
 
     function removeFromCart(index) {
       myCart.splice(index, 1);
-      document.getElementById('cartBadge').innerText = myCart.length;
+      let totalItems = myCart.reduce((sum, item) => sum + item.qty, 0);
+      document.getElementById('cartBadge').innerText = totalItems;
       renderCart();
     }
 
@@ -1415,15 +1445,16 @@
 
       let subtotal = 0;
       myCart.forEach((item, index) => {
-        subtotal += item.price;
+        let itemTotal = item.unitPrice * item.qty;
+        subtotal += itemTotal;
         container.innerHTML += `
           <div class="cart-item-row">
             <div class="cart-item-info">
-              <strong>${item.name}</strong>
+              <strong>${item.qty}x ${item.baseName}</strong>
               <span>${item.details}</span>
             </div>
             <div style="display:flex; align-items:center;">
-              <div class="cart-item-price">₱${item.price}</div>
+              <div class="cart-item-price">₱${itemTotal}</div>
               <button class="remove-btn" onclick="removeFromCart(${index})">X</button>
             </div>
           </div>
@@ -1465,8 +1496,9 @@
       let orderData = "";
       
       myCart.forEach((item, index) => {
-        subtotal += item.price;
-        orderData += `${index + 1}. ${item.name}\n   ${item.details}\n   Price: ₱${item.price}\n\n`;
+        let itemTotal = item.unitPrice * item.qty;
+        subtotal += itemTotal;
+        orderData += `${index + 1}. ${item.qty}x ${item.baseName}\n   ${item.details}\n   Price: ₱${itemTotal}\n\n`;
       });
 
       let total = subtotal + fee;
