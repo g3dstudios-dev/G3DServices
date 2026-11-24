@@ -35,7 +35,7 @@
   .panel { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 14px; min-width: 0; }
   @media (min-width: 600px) { .panel { padding: 20px; } }
 
-  /* Full Preview Card (Normal flow at top, sticky on wide desktop) */
+  /* Full Preview Card (Attached at top, sticky on wide desktop) */
   .preview-box {
     background: var(--card); border: 1px solid var(--border); border-radius: 12px;
     padding: 14px; display: flex; flex-direction: column; align-items: center;
@@ -268,14 +268,14 @@
           <button type="button" class="opt-btn" data-val="B5 - Stitch Border">B5 - Stitch Border<small>Dashed perimeter</small></button>
           <button type="button" class="opt-btn" data-val="B6 - Double Frame">B6 - Double Frame<small>Inner &amp; outer line</small></button>
           <button type="button" class="opt-btn" data-val="B7 - Heart Accent Edge">B7 - Heart Accent Edge<small>Frame + heart mark</small></button>
-          <button type="button" class="opt-btn" data-val="B8 - Minimal Bars">B8 - Minimal Bars<small>Top &amp; bottom bars</small></button>
+          <button type="button" class="opt-btn" data-val="B8 - Medallion Ring">F6 - Medallion Ring<small>Thick accent ring</small></button>
           <button type="button" class="opt-btn" data-val="B9 - Clean / None">B9 - Clean / None<small>Plain wood finish</small></button>
         </div>
       </div>
 
-    <div class="group">
-      <label class="title">3B. Back Divider Style (D1–D8 • Auto-Rotates)</label>
-      <div class="btn-grid" data-group="divider">
+      <div class="group">
+        <label class="title">4. Back Divider Style (D1–D8 + None • Auto-Rotates)</label>
+        <div class="btn-grid" data-group="divider">
           <button type="button" class="opt-btn active" data-val="D1 - Sparkle Line">D1 - Sparkle Line<small>4-point star &amp; end dots</small></button>
           <button type="button" class="opt-btn" data-val="D2 - Ornate Diamond">D2 - Ornate Diamond<small>Classic center motif</small></button>
           <button type="button" class="opt-btn" data-val="D3 - Botanical Leaf">D3 - Botanical Leaf<small>Leaves &amp; diamond</small></button>
@@ -289,7 +289,7 @@
       </div>
 
       <div class="group">
-        <label class="title">4. Font Style (T1–T9)</label>
+        <label class="title">5. Font Style (T1–T9)</label>
         <div class="btn-grid" data-group="font">
           <button type="button" class="opt-btn active" data-val="T1 - Brush Script" style="font-family:'Caveat Brush',cursive; font-size:0.92rem;">T1 - Brush Script<small>Casual &amp; bold</small></button>
           <button type="button" class="opt-btn" data-val="T2 - Calligraphy" style="font-family:'Great Vibes',cursive; font-size:1.02rem;">T2 - Calligraphy<small>Elegant script</small></button>
@@ -304,7 +304,7 @@
       </div>
 
       <div class="group">
-        <label class="title">5. Center Accent Icon</label>
+        <label class="title">6. Center Accent Icon</label>
         <div class="btn-grid" data-group="icon">
           <button type="button" class="opt-btn active" data-val="I1 - Outline Heart (♡)">I1 - Outline Heart (♡)</button>
           <button type="button" class="opt-btn" data-val="I2 - Solid Heart (♥)">I2 - Solid Heart (♥)</button>
@@ -317,15 +317,15 @@
 
       <div class="group">
         <label class="title">
-          6. Back Engraved Details
+          7. Back Engraved Details
           <span class="limit-badge" id="limitLabel">Max 24 chars/line • Auto-fits &amp; packs empty lines</span>
         </label>
         <div class="input-wrap">
-          <input type="text" id="line1Input" placeholder="Line 1 (e.g., Person1/Line1)" value="ME" maxlength="24">
+          <input type="text" id="line1Input" placeholder="Line 1 (e.g., IMELDA)" value="IMELDA" maxlength="24">
           <span class="char-count" id="count1">6/24</span>
         </div>
         <div class="input-wrap">
-          <input type="text" id="line2Input" placeholder="Line 2 (e.g., Person2/Line2)" value="YOU" maxlength="24">
+          <input type="text" id="line2Input" placeholder="Line 2 (e.g., WILFREDO)" value="WILFREDO" maxlength="24">
           <span class="char-count" id="count2">8/24</span>
         </div>
         <div class="input-wrap hidden" id="line3Wrap">
@@ -333,7 +333,7 @@
           <span class="char-count" id="count3">0/24</span>
         </div>
         <div class="input-wrap">
-          <input type="text" id="dateInput" placeholder="Date / Subtitle (e.g., Date/Line4)" value="01/01/26" maxlength="20">
+          <input type="text" id="dateInput" placeholder="Date / Subtitle (e.g., 11/15/82)" value="11/15/82" maxlength="20">
           <span class="char-count" id="countDate">8/20</span>
         </div>
       </div>
@@ -370,10 +370,10 @@
   // =========================================================================
   // GOOGLE FORM CONFIGURATION (Replace with your actual Form ID & entry.XXXX)
   // =========================================================================
-  const GFORM_BASE_URL = "https://docs.google.com/forms/d/e/1FAIpQLSeF8q4V2nlRIsnkoQN6eOhsqWGZlz4uaWX48wkYZ1cOWb2s5w/viewform?usp=pp_url";
-  const ENTRY_REF_ID   = "entry.273467045";
-  const ENTRY_DETAILS  = "entry.906786846";
-  const ENTRY_TEXT     = "entry.147068132";
+  const GFORM_BASE_URL = "https://docs.google.com/forms/d/e/YOUR_FORM_ID_HERE/viewform?usp=pp_url";
+  const ENTRY_REF_ID   = "entry.111111111";
+  const ENTRY_DETAILS  = "entry.222222222";
+  const ENTRY_TEXT     = "entry.333333333";
 
   const state = {
     shape: "Round",
@@ -414,13 +414,11 @@
     "None":                   ""
   };
 
-  // Detach / Re-attach floating mini-preview when scrolling past mainPreviewBox
   const mainPreviewBox = document.getElementById('mainPreviewBox');
   const floatingPreview = document.getElementById('floatingPreview');
 
   function updateFloatingVisibility() {
     const rect = mainPreviewBox.getBoundingClientRect();
-    // Show floating bar once the main preview card scrolls above the top of the screen
     const shouldFloat = rect.bottom < 40;
     floatingPreview.classList.toggle('visible', shouldFloat);
     floatingPreview.setAttribute('aria-hidden', String(!shouldFloat));
@@ -571,7 +569,7 @@
         case "B5 - Stitch Border":     return `<circle cx="107.5" cy="136" r="57" fill="none" stroke="#3b1e08" stroke-width="1.2" stroke-dasharray="4 3"/>`;
         case "B6 - Double Frame":      return `<circle cx="107.5" cy="136" r="59" fill="none" stroke="#3b1e08" stroke-width="1"/><circle cx="107.5" cy="136" r="54" fill="none" stroke="#3b1e08" stroke-width="0.7"/>`;
         case "B7 - Heart Accent Edge": return `<circle cx="107.5" cy="136" r="57" fill="none" stroke="#3b1e08" stroke-width="1"/><text x="107.5" y="83" text-anchor="middle" fill="#3b1e08" font-size="8">♡</text>`;
-        case "B8 - Minimal Bars":      return `<line x1="78" y1="90" x2="137" y2="90" stroke="#3b1e08" stroke-width="1.4"/><line x1="78" y1="182" x2="137" y2="182" stroke="#3b1e08" stroke-width="1.4"/>`;
+        case "B8 - Medallion Ring":  return `<circle cx="107.5" cy="136" r="57" fill="none" stroke="#3b1e08" stroke-width="2.4"/>`;
       }
     } else if (orient === "Portrait") {
       switch (b) {
@@ -582,7 +580,7 @@
         case "B5 - Stitch Border":     return `<rect x="71" y="80" width="73" height="112" rx="5" fill="none" stroke="#3b1e08" stroke-width="1.2" stroke-dasharray="4 3"/>`;
         case "B6 - Double Frame":      return `<rect x="69" y="78" width="77" height="116" rx="6" fill="none" stroke="#3b1e08" stroke-width="1"/><rect x="73" y="82" width="69" height="108" rx="4" fill="none" stroke="#3b1e08" stroke-width="0.7"/>`;
         case "B7 - Heart Accent Edge": return `<rect x="71" y="80" width="73" height="112" rx="5" fill="none" stroke="#3b1e08" stroke-width="1"/><text x="107.5" y="195" text-anchor="middle" fill="#3b1e08" font-size="8">♡</text>`;
-        case "B8 - Minimal Bars":      return `<line x1="78" y1="88" x2="137" y2="88" stroke="#3b1e08" stroke-width="1.5"/><line x1="78" y1="184" x2="137" y2="184" stroke="#3b1e08" stroke-width="1.5"/>`;
+        case "B8 - Medallion Ring":    return `<rect x="71" y="80" width="73" height="112" rx="5" fill="none" stroke="#3b1e08" stroke-width="2.4"/>`;
       }
     } else {
       switch (b) {
@@ -593,13 +591,13 @@
         case "B5 - Stitch Border":     return `<rect x="70" y="92" width="120" height="72" rx="5" fill="none" stroke="#3b1e08" stroke-width="1.2" stroke-dasharray="4 3"/>`;
         case "B6 - Double Frame":      return `<rect x="68" y="90" width="124" height="76" rx="6" fill="none" stroke="#3b1e08" stroke-width="1"/><rect x="72" y="94" width="116" height="68" rx="4" fill="none" stroke="#3b1e08" stroke-width="0.7"/>`;
         case "B7 - Heart Accent Edge": return `<rect x="70" y="92" width="120" height="72" rx="5" fill="none" stroke="#3b1e08" stroke-width="1"/><text x="130" y="167" text-anchor="middle" fill="#3b1e08" font-size="8">♡</text>`;
-        case "B8 - Minimal Bars":      return `<line x1="80" y1="99" x2="180" y2="99" stroke="#3b1e08" stroke-width="1.5"/><line x1="80" y1="157" x2="180" y2="157" stroke="#3b1e08" stroke-width="1.5"/>`;
+        case "B8 - Medallion Ring":    return `<rect x="70" y="92" width="120" height="72" rx="5" fill="none" stroke="#3b1e08" stroke-width="2.4"/>`;
       }
     }
     return "";
   }
 
-  function renderBackDividers(shape, orient, dividerStyle) {
+function renderBackDividers(shape, orient, dividerStyle) {
     if (!dividerStyle || dividerStyle === "None") return "";
     const color = "#3b1e08";
 
@@ -616,7 +614,6 @@
             ${star(0, 0, 1)}
             <line x1="8" y1="0" x2="${hw - 4}" y2="0" stroke="${color}" stroke-width="1"/>
             <circle cx="${hw}" cy="0" r="1.5" fill="${color}"/>`;
-
         case "D2 - Ornate Diamond":
           return `
             <line x1="${-hw}" y1="0" x2="-12" y2="0" stroke="${color}" stroke-width="1.1"/>
@@ -624,7 +621,6 @@
             <circle cx="-8.5" cy="0" r="1.5" fill="${color}"/>
             <circle cx="8.5" cy="0" r="1.5" fill="${color}"/>
             <line x1="12" y1="0" x2="${hw}" y2="0" stroke="${color}" stroke-width="1.1"/>`;
-
         case "D3 - Botanical Leaf":
           return `
             <line x1="${-hw}" y1="0" x2="-17" y2="0" stroke="${color}" stroke-width="1.1"/>
@@ -634,20 +630,17 @@
             <path d="M 3 0 Q 6.8 -4.2 10.5 0 Q 6.8 4.2 3 0 Z" fill="none" stroke="${color}" stroke-width="0.9"/>
             <circle cx="13.5" cy="0" r="1.3" fill="${color}"/>
             <line x1="17" y1="0" x2="${hw}" y2="0" stroke="${color}" stroke-width="1.1"/>`;
-
         case "D4 - Heart Rule":
           return `
             <line x1="${-hw}" y1="0" x2="-9" y2="0" stroke="${color}" stroke-width="1.5"/>
             <path d="M 0 4 C -5.8 0.2 -5.8 -4.4 -2.3 -4.4 C -0.8 -4.4 0 -3.2 0 -3.2 C 0 -3.2 0.8 -4.4 2.3 -4.4 C 5.8 -4.4 5.8 0.2 0 4 Z" fill="${color}"/>
             <line x1="9" y1="0" x2="${hw}" y2="0" stroke="${color}" stroke-width="1.5"/>`;
-
         case "D5 - Twin Sparkles":
           return `
             <line x1="${-hw}" y1="0" x2="${hw - 20}" y2="0" stroke="${color}" stroke-width="1.2"/>
             ${star(hw - 12, 0, 1)}
             <circle cx="${hw - 6.5}" cy="0" r="1.2" fill="${color}"/>
             ${star(hw - 1.5, 0, 0.7)}`;
-
         case "D6 - Geometric Line":
           return `
             <polygon points="${-hw},0 ${-hw + 3.5},-2.3 ${-hw + 6},0 ${-hw + 3.5},2.3" fill="${color}"/>
@@ -655,7 +648,6 @@
             <polygon points="0,-3.2 3.5,0 0,3.2 -3.5,0" fill="none" stroke="${color}" stroke-width="1"/>
             <line x1="7" y1="0" x2="${hw - 6}" y2="0" stroke="${color}" stroke-width="0.9"/>
             <polygon points="${hw},0 ${hw - 3.5},-2.3 ${hw - 6},0 ${hw - 3.5},2.3" fill="${color}"/>`;
-
         case "D7 - Double Beaded":
           return `
             <line x1="${-hw}" y1="-1.8" x2="${hw}" y2="-1.8" stroke="${color}" stroke-width="0.8"/>
@@ -663,7 +655,6 @@
             <polygon points="0,-3.4 3,0 0,3.4 -3,0" fill="${color}"/>
             <circle cx="${-hw * 0.45}" cy="-1.8" r="1.3" fill="${color}"/>
             <circle cx="${hw * 0.45}" cy="-1.8" r="1.3" fill="${color}"/>`;
-
         case "D8 - Starburst Finial":
         default:
           return `
@@ -675,24 +666,21 @@
       }
     }
 
-    // Rectangle Portrait: place rotated dividers cleanly inside the left & right margins
-    if (shape === "Rectangle" && orient === "Portrait") {
-      return `
-        <g transform="translate(76.5, 136) rotate(90)">${dividerShape(64)}</g>
-        <g transform="translate(138.5, 136) rotate(90)">${dividerShape(64)}</g>`;
-    }
-
-    // Round: place above & below the text block inside the circle
     if (shape === "Round") {
       return `
-        <g transform="translate(107.5, 92)">${dividerShape(48)}</g>
-        <g transform="translate(107.5, 180)">${dividerShape(48)}</g>`;
+        <g transform="translate(107.5, 93)">${dividerShape(48)}</g>
+        <g transform="translate(107.5, 179)">${dividerShape(48)}</g>`;
     }
 
-    // Rectangle Landscape: place above & below the text block inside the horizontal rectangle
+    if (orient === "Portrait") {
+      return `
+        <g transform="translate(107.5, 88)">${dividerShape(56)}</g>
+        <g transform="translate(107.5, 184)">${dividerShape(56)}</g>`;
+    }
+
     return `
-      <g transform="translate(130, 100)">${dividerShape(74)}</g>
-      <g transform="translate(130, 162)">${dividerShape(74)}</g>`;
+      <g transform="translate(130, 97)">${dividerShape(66)}</g>
+      <g transform="translate(130, 159)">${dividerShape(66)}</g>`;
   }
 
   function getShapeAndOrientationLabel() {
@@ -754,6 +742,11 @@
     document.getElementById('miniFrontSvg').innerHTML = frontMarkup;
 
     const backGeo = buildBodyAndHardware(state.shape, state.backOrient);
+    if (state.divider === "None") {
+      backGeo.topY -= 6;
+      backGeo.bottomY += 6;
+    }
+
     const items = [];
     const baseText = isScript ? 13.5 : 11;
     if (l1) items.push({ text: l1, size: fitTextSize(l1, baseText, cfg.maxWidthPx, isScript), isIcon: false });
@@ -783,7 +776,7 @@
 
     const backBorder = getBackBorder(state.shape, state.backOrient, state.border);
     const backDividers = renderBackDividers(state.shape, state.backOrient, state.divider);
-    const backMarkup = woodDefs + backGeo.hardware + backGeo.body + backBorder + textNodes;
+    const backMarkup = woodDefs + backGeo.hardware + backGeo.body + backBorder + backDividers + textNodes;
 
     document.getElementById('backSvg').innerHTML = backMarkup;
     document.getElementById('miniBackSvg').innerHTML = backMarkup;
@@ -796,7 +789,7 @@
   function openAcknowledgement() {
     document.getElementById('ackRef').textContent = state.refId;
     document.getElementById('ackShape').textContent = getShapeAndOrientationLabel();
-    document.getElementById('ackDesign').textContent = `Front: ${state.front} | Back: ${state.border}`;
+    document.getElementById('ackDesign').textContent = `Front: ${state.front} | Back: ${state.border} | Divider: ${state.divider}`;
     document.getElementById('ackFontIcon').textContent = `Font: ${state.font} | Icon: ${state.icon}`;
     document.getElementById('ackText').textContent = collectTextSummary();
     document.getElementById('ackModal').style.display = "flex";
