@@ -380,6 +380,7 @@
     backOrient: "Portrait",
     front: "F1 - Classic Line",
     border: "B1 - Classic Line",
+    divider: "D1 - Sparkle Line",
     font: "T1 - Brush Script",
     icon: "I1 - Outline Heart (♡)",
     refId: "G3D-" + Math.floor(100000 + Math.random() * 900000)
@@ -698,7 +699,7 @@
   }
 
   function getFullDetailsString() {
-    return `${getShapeAndOrientationLabel()} | Front: ${state.front} | Back: ${state.border} | Font: ${state.font} | Icon: ${state.icon}`;
+    return `${getShapeAndOrientationLabel()} | Front: ${state.front} | Back: ${state.border} | Divider: ${state.divider} | Font: ${state.font} | Icon: ${state.icon}`;
   }
 
   function collectTextSummary() {
@@ -779,6 +780,7 @@
     }
 
     const backBorder = getBackBorder(state.shape, state.backOrient, state.border);
+    const backDividers = renderBackDividers(state.shape, state.backOrient, state.divider);
     const backMarkup = woodDefs + backGeo.hardware + backGeo.body + backBorder + textNodes;
 
     document.getElementById('backSvg').innerHTML = backMarkup;
