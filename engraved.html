@@ -18,95 +18,110 @@
     --accent-hover: #be123c;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--bg); color: var(--text); font-family: 'Montserrat', sans-serif; padding: 20px; line-height: 1.5; }
-  .container { max-width: 1140px; margin: 0 auto; }
-  header { text-align: center; padding-bottom: 20px; border-bottom: 1px solid var(--border); margin-bottom: 24px; }
-  header h1 { font-size: 1.55rem; letter-spacing: 1px; text-transform: uppercase; font-weight: 800; }
+  html, body { max-width: 100%; overflow-x: hidden; }
+  body { background: var(--bg); color: var(--text); font-family: 'Montserrat', sans-serif; padding: 14px; line-height: 1.45; }
+  .container { width: 100%; max-width: 1140px; margin: 0 auto; }
+  header { text-align: center; padding-bottom: 16px; border-bottom: 1px solid var(--border); margin-bottom: 18px; }
+  header h1 { font-size: clamp(1.15rem, 4.5vw, 1.55rem); letter-spacing: 0.8px; text-transform: uppercase; font-weight: 800; }
   header h1 span { color: var(--accent); }
-  header p { color: var(--muted); font-size: 0.88rem; margin-top: 4px; }
+  header p { color: var(--muted); font-size: 0.82rem; margin-top: 4px; }
 
-  .grid { display: grid; grid-template-columns: 1fr 1.22fr; gap: 24px; }
-  @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
-
-  .panel { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
-  .preview-box { position: sticky; top: 20px; display: flex; flex-direction: column; align-items: center; }
-  .preview-stage {
-    width: 100%; min-height: 365px; background: #22252a; border-radius: 10px;
-    display: flex; justify-content: center; align-items: center; gap: 18px;
-    padding: 18px; flex-wrap: wrap; border: 1px dashed var(--border);
+  .grid { display: grid; grid-template-columns: 1fr; gap: 18px; }
+  @media (min-width: 900px) {
+    body { padding: 20px; }
+    .grid { grid-template-columns: 1fr 1.22fr; gap: 24px; }
   }
-  .side-label { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; text-align: center; margin-top: 6px; }
 
-  .group { margin-bottom: 18px; }
+  .panel { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 14px; min-width: 0; }
+  @media (min-width: 600px) { .panel { padding: 20px; } }
+
+  .preview-box { display: flex; flex-direction: column; align-items: center; }
+  @media (min-width: 900px) { .preview-box { position: sticky; top: 20px; } }
+
+  .preview-stage {
+    width: 100%; min-height: 220px; background: #22252a; border-radius: 10px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+    padding: 12px; border: 1px dashed var(--border); align-items: center; justify-items: center;
+  }
+  .preview-card { width: 100%; max-width: 195px; text-align: center; }
+  .preview-card svg { width: 100%; height: auto; display: block; }
+  .side-label { font-size: 0.68rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.6px; text-align: center; margin-top: 4px; }
+
+  .group { margin-bottom: 16px; }
   .group.hidden { display: none; }
-  .group label.title { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 0.78rem; font-weight: 800; text-transform: uppercase; color: #e5e7eb; margin-bottom: 8px; letter-spacing: 0.5px; }
-  .group label.title span.limit-badge { color: #f87171; font-weight: 600; font-size: 0.72rem; text-transform: none; }
+  .group label.title { display: flex; justify-content: space-between; align-items: center; gap: 6px; flex-wrap: wrap; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: #e5e7eb; margin-bottom: 8px; letter-spacing: 0.4px; }
+  .group label.title span.limit-badge { color: #f87171; font-weight: 600; font-size: 0.7rem; text-transform: none; }
 
-  .btn-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
+  .btn-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  @media (min-width: 520px) {
+    .btn-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
   .opt-btn {
     background: #111317; border: 1px solid var(--border); color: var(--text);
-    padding: 9px 8px; border-radius: 8px; cursor: pointer; font-size: 0.76rem;
+    padding: 9px 8px; border-radius: 8px; cursor: pointer; font-size: 0.74rem;
     text-align: left; transition: 0.15s; font-family: 'Montserrat', sans-serif;
+    min-width: 0; overflow-wrap: anywhere;
   }
   .opt-btn:hover { border-color: #6b7280; }
-  .opt-btn.active { border-color: var(--accent); background: rgba(225, 29, 72, 0.15); font-weight: 600; }
-  .opt-btn small { display: block; color: var(--muted); font-size: 0.67rem; font-weight: 400; margin-top: 2px; font-family: 'Montserrat', sans-serif; }
+  .opt-btn.active { border-color: var(--accent); background: rgba(225, 29, 72, 0.16); font-weight: 600; }
+  .opt-btn small { display: block; color: var(--muted); font-size: 0.65rem; font-weight: 400; margin-top: 2px; font-family: 'Montserrat', sans-serif; overflow-wrap: anywhere; }
 
   .input-wrap { position: relative; margin-bottom: 8px; }
   .input-wrap.hidden { display: none; }
   input[type="text"] {
     width: 100%; background: #111317; border: 1px solid var(--border); color: var(--text);
-    padding: 10px 62px 10px 12px; border-radius: 8px; font-size: 0.88rem; font-family: 'Montserrat', sans-serif;
+    padding: 10px 64px 10px 12px; border-radius: 8px; font-size: 0.86rem; font-family: 'Montserrat', sans-serif;
   }
   input:focus { outline: none; border-color: var(--accent); }
-  .char-count { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); font-size: 0.7rem; color: var(--muted); pointer-events: none; }
+  .char-count { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); font-size: 0.68rem; color: var(--muted); pointer-events: none; }
 
   .summary-card {
     width: 100%; background: #111317; border: 1px solid var(--border);
-    border-radius: 8px; padding: 12px; margin-top: 14px; font-size: 0.75rem;
+    border-radius: 8px; padding: 10px 12px; margin-top: 12px; font-size: 0.74rem;
   }
   .summary-card code { color: #f87171; font-family: 'Courier Prime', monospace; display: block; margin-top: 4px; word-break: break-word; }
 
-  .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; margin-top: 14px; }
+  .actions { display: grid; grid-template-columns: 1fr; gap: 8px; width: 100%; margin-top: 12px; }
+  @media (min-width: 480px) { .actions { grid-template-columns: 1fr 1fr; gap: 10px; } }
   .btn-primary {
     background: var(--accent); color: #fff; border: none; padding: 12px; border-radius: 8px;
-    font-weight: 800; font-size: 0.8rem; cursor: pointer; text-transform: uppercase;
+    font-weight: 800; font-size: 0.78rem; cursor: pointer; text-transform: uppercase;
   }
   .btn-primary:hover { background: var(--accent-hover); }
   .btn-secondary {
     background: #272a30; color: #fff; border: 1px solid var(--border); padding: 12px;
-    border-radius: 8px; font-weight: 600; font-size: 0.8rem; cursor: pointer;
+    border-radius: 8px; font-weight: 600; font-size: 0.78rem; cursor: pointer;
   }
   .btn-secondary:hover { background: #32363e; }
 
   /* Preview-Only Slip Modal */
   .modal-backdrop {
     display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85);
-    justify-content: center; align-items: center; padding: 16px; z-index: 999;
+    justify-content: center; align-items: center; padding: 14px; z-index: 999;
     user-select: none; -webkit-user-select: none;
   }
   .slip {
     position: relative; overflow: hidden;
     background: #ffffff; color: #111827; max-width: 450px; width: 100%;
-    border-radius: 10px; padding: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    border-radius: 10px; padding: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.5);
   }
   .watermark {
     position: absolute; top: 50%; left: 50%;
     transform: translate(-50%, -50%) rotate(-32deg);
-    font-size: 1.7rem; font-weight: 800; color: rgba(225, 29, 72, 0.16);
+    font-size: 1.45rem; font-weight: 800; color: rgba(225, 29, 72, 0.16);
     white-space: nowrap; pointer-events: none; text-transform: uppercase;
-    border: 3px solid rgba(225, 29, 72, 0.16); padding: 6px 14px; border-radius: 6px;
+    border: 3px solid rgba(225, 29, 72, 0.16); padding: 6px 12px; border-radius: 6px;
   }
-  .slip-header { border-bottom: 2px dashed #d1d5db; padding-bottom: 12px; margin-bottom: 14px; text-align: center; }
-  .slip-header h2 { font-size: 1.15rem; letter-spacing: 1px; }
+  .slip-header { border-bottom: 2px dashed #d1d5db; padding-bottom: 10px; margin-bottom: 12px; text-align: center; }
+  .slip-header h2 { font-size: 1.1rem; letter-spacing: 1px; }
   .slip-badge {
-    display: inline-block; background: #fef3c7; color: #92400e; font-size: 0.68rem;
+    display: inline-block; background: #fef3c7; color: #92400e; font-size: 0.66rem;
     font-weight: 800; padding: 3px 8px; border-radius: 4px; margin-top: 6px; text-transform: uppercase;
   }
-  .slip-row { display: flex; justify-content: space-between; gap: 10px; font-size: 0.8rem; padding: 6px 0; border-bottom: 1px solid #f3f4f6; position: relative; z-index: 2; }
+  .slip-row { display: flex; justify-content: space-between; gap: 10px; font-size: 0.78rem; padding: 5px 0; border-bottom: 1px solid #f3f4f6; position: relative; z-index: 2; }
   .slip-row span:first-child { color: #6b7280; flex-shrink: 0; }
   .slip-row span:last-child { font-weight: 600; text-align: right; word-break: break-word; }
-  .slip-footer { margin-top: 14px; font-size: 0.72rem; color: #374151; text-align: center; background: #f3f4f6; padding: 10px; border-radius: 6px; position: relative; z-index: 2; }
+  .slip-footer { margin-top: 12px; font-size: 0.7rem; color: #374151; text-align: center; background: #f3f4f6; padding: 10px; border-radius: 6px; position: relative; z-index: 2; }
   @media print { .modal-backdrop { display: none !important; } }
 </style>
 </head>
@@ -122,12 +137,12 @@
     <!-- LEFT: LIVE PREVIEW -->
     <div class="panel preview-box">
       <div class="preview-stage">
-        <div>
-          <svg id="frontSvg" width="215" height="225" viewBox="0 0 215 225"></svg>
+        <div class="preview-card">
+          <svg id="frontSvg" viewBox="0 0 215 225"></svg>
           <div class="side-label" id="frontSideLabel">Front (Photo Side)</div>
         </div>
-        <div>
-          <svg id="backSvg" width="215" height="225" viewBox="0 0 215 225"></svg>
+        <div class="preview-card">
+          <svg id="backSvg" viewBox="0 0 215 225"></svg>
           <div class="side-label" id="backSideLabel">Back (Engraved Text)</div>
         </div>
       </div>
@@ -148,8 +163,8 @@
       <div class="group">
         <label class="title">1. Keychain Shape</label>
         <div class="btn-grid" data-group="shape">
-          <button class="opt-btn active" data-val="Round">Round Wood<small>Max 24 chars/line</small></button>
-          <button class="opt-btn" data-val="Rectangle">Rectangle Wood<small>Independent front/back</small></button>
+          <button class="opt-btn active" data-val="Round">Round Wood<small>Natural Beechwood • Metal Ring</small></button>
+          <button class="opt-btn" data-val="Rectangle">Rectangle Wood<small>Natural Beechwood • Leather Strap</small></button>
         </div>
       </div>
 
@@ -198,15 +213,15 @@
       <div class="group">
         <label class="title">4. Font Style (T1–T9)</label>
         <div class="btn-grid" data-group="font">
-          <button class="opt-btn active" data-val="T1 - Brush Script" style="font-family:'Caveat Brush',cursive; font-size:0.95rem;">T1 - Brush Script<small>Casual &amp; bold</small></button>
-          <button class="opt-btn" data-val="T2 - Calligraphy" style="font-family:'Great Vibes',cursive; font-size:1.05rem;">T2 - Calligraphy<small>Elegant script</small></button>
+          <button class="opt-btn active" data-val="T1 - Brush Script" style="font-family:'Caveat Brush',cursive; font-size:0.92rem;">T1 - Brush Script<small>Casual &amp; bold</small></button>
+          <button class="opt-btn" data-val="T2 - Calligraphy" style="font-family:'Great Vibes',cursive; font-size:1.02rem;">T2 - Calligraphy<small>Elegant script</small></button>
           <button class="opt-btn" data-val="T3 - Classic Serif" style="font-family:'Playfair Display',serif;">T3 - Classic Serif<small>Editorial serif</small></button>
           <button class="opt-btn" data-val="T4 - Minimal Sans" style="font-family:'Montserrat',sans-serif;">T4 - Minimal Sans<small>Clean geometric</small></button>
           <button class="opt-btn" data-val="T5 - Typewriter" style="font-family:'Courier Prime',monospace;">T5 - Typewriter<small>Vintage mono</small></button>
           <button class="opt-btn" data-val="T6 - Bold Block" style="font-family:'Oswald',sans-serif;">T6 - Bold Block<small>Tall condensed</small></button>
           <button class="opt-btn" data-val="T7 - Roman Serif" style="font-family:'Cinzel',serif;">T7 - Roman Serif<small>Formal caps</small></button>
-          <button class="opt-btn" data-val="T8 - Retro Script" style="font-family:'Pacifico',cursive; font-size:0.92rem;">T8 - Retro Script<small>Rounded cursive</small></button>
-          <button class="opt-btn" data-val="T9 - Marker Hand" style="font-family:'Kalam',cursive; font-size:0.9rem;">T9 - Marker Hand<small>Natural handwriting</small></button>
+          <button class="opt-btn" data-val="T8 - Retro Script" style="font-family:'Pacifico',cursive; font-size:0.9rem;">T8 - Retro Script<small>Rounded cursive</small></button>
+          <button class="opt-btn" data-val="T9 - Marker Hand" style="font-family:'Kalam',cursive; font-size:0.88rem;">T9 - Marker Hand<small>Natural handwriting</small></button>
         </div>
       </div>
 
@@ -254,7 +269,7 @@
     <div class="watermark">PREVIEW ONLY • UNPAID</div>
     <div class="slip-header">
       <h2>G3D STUDIOS</h2>
-      <div style="font-size:0.74rem; color:#4b5563;">Santa Maria, Laguna • Custom Laser &amp; 3D Fabrication</div>
+      <div style="font-size:0.72rem; color:#4b5563;">Santa Maria, Laguna • Custom Laser &amp; 3D Fabrication</div>
       <div class="slip-badge">Unpaid Design Summary Preview</div>
     </div>
     <div class="slip-row"><span>Draft Reference ID:</span><span id="ackRef"></span></div>
@@ -264,9 +279,9 @@
     <div class="slip-row"><span>Engraved Text:</span><span id="ackText"></span></div>
     <div class="slip-footer">
       <strong>ESTIMATED PRODUCTION TIME: 2–3 DAYS</strong> (after payment verification).<br>
-      Click <strong>"Proceed to Order Form"</strong> below, upload your photo &amp; payment proof, and enter your email address to receive your official <strong>PDF Acknowledgement Receipt</strong>.
+      Click <strong>"Proceed to Order Form"</strong> below, upload your photo &amp; payment proof, and enter your email address to receive your <strong>PDF Acknowledgement Receipt</strong>.
     </div>
-    <div style="display:flex; gap:8px; margin-top:14px; position:relative; z-index:2;">
+    <div style="display:flex; gap:8px; margin-top:12px; position:relative; z-index:2;">
       <button class="btn-secondary" style="flex:1;" onclick="closeAck()">Edit Design</button>
       <button class="btn-primary" style="flex:1;" onclick="submitToGoogleForm()">Proceed to Order Form →</button>
     </div>
@@ -278,9 +293,9 @@
   // GOOGLE FORM CONFIGURATION (Replace with your actual Form ID & entry.XXXX)
   // =========================================================================
   const GFORM_BASE_URL = "https://docs.google.com/forms/d/e/1FAIpQLSeF8q4V2nlRIsnkoQN6eOhsqWGZlz4uaWX48wkYZ1cOWb2s5w/viewform?usp=pp_url";
-  const ENTRY_REF_ID   = "entry.273467045"; // Field 1: Reference ID
-  const ENTRY_DETAILS  = "entry.906786846"; // Field 2: Complete Shape, Orientation, Front, Back, Font & Icon Details
-  const ENTRY_TEXT     = "entry.147068132"; // Field 3: Complete Back Engraved Text & Date
+  const ENTRY_REF_ID   = "entry.273467045";
+  const ENTRY_DETAILS  = "entry.906786846";
+  const ENTRY_TEXT     = "entry.147068132";
 
   const state = {
     shape: "Round",
@@ -293,7 +308,6 @@
     refId: "G3D-" + Math.floor(100000 + Math.random() * 900000)
   };
 
-  // Circle = 24 chars/line; Rectangles scaled by back orientation
   const charLimits = {
     Round:               { line: 24, date: 20, maxWidthPx: 102 },
     Rectangle_Portrait:  { line: 18, date: 16, maxWidthPx: 72  },
@@ -417,36 +431,36 @@
     if (f === "F9 - Borderless") return "";
     if (shape === "Round") {
       switch (f) {
-        case "F1 - Classic Line":   return `<circle cx="107.5" cy="136" r="57" fill="none" stroke="#3b1e08" stroke-width="1.2"/>`;
-        case "F2 - Polaroid":       return `<circle cx="107.5" cy="130" r="51" fill="none" stroke="#3b1e08" stroke-width="1.2"/><text x="107.5" y="191" text-anchor="middle" fill="#3b1e08" font-size="8" style="font-family:${fontCss}">${escapeHtml(dt)}</text>`;
-        case "F3 - Double Vintage": return `<circle cx="107.5" cy="136" r="59" fill="none" stroke="#3b1e08" stroke-width="1"/><circle cx="107.5" cy="136" r="54" fill="none" stroke="#3b1e08" stroke-width="0.7"/>`;
-        case "F4 - Dashed Frame":   return `<circle cx="107.5" cy="136" r="57" fill="none" stroke="#3b1e08" stroke-width="1.2" stroke-dasharray="4 3"/>`;
-        case "F5 - Corner Marks":   return `<path d="M 65 94 L 75 86 M 150 94 L 140 86 M 65 178 L 75 186 M 150 178 L 140 186" fill="none" stroke="#3b1e08" stroke-width="1.5"/>`;
-        case "F6 - Medallion Ring": return `<circle cx="107.5" cy="136" r="57" fill="none" stroke="#3b1e08" stroke-width="2.4"/>`;
-        case "F7 - Sparkle Frame":  return `<circle cx="107.5" cy="136" r="57" fill="none" stroke="#3b1e08" stroke-width="1"/><text x="107.5" y="81" text-anchor="middle" fill="#3b1e08" font-size="8.5">✦</text><text x="107.5" y="196" text-anchor="middle" fill="#3b1e08" font-size="8.5">✦</text>`;
-        case "F8 - Keepsake Banner":return `<line x1="65" y1="96" x2="150" y2="96" stroke="#3b1e08" stroke-width="1.2"/><line x1="65" y1="176" x2="150" y2="176" stroke="#3b1e08" stroke-width="1.2"/>`;
+        case "F1 - Classic Line":    return `<circle cx="107.5" cy="136" r="57" fill="none" stroke="#3b1e08" stroke-width="1.2"/>`;
+        case "F2 - Polaroid":        return `<circle cx="107.5" cy="130" r="51" fill="none" stroke="#3b1e08" stroke-width="1.2"/><text x="107.5" y="191" text-anchor="middle" fill="#3b1e08" font-size="8" style="font-family:${fontCss}">${escapeHtml(dt)}</text>`;
+        case "F3 - Double Vintage":  return `<circle cx="107.5" cy="136" r="59" fill="none" stroke="#3b1e08" stroke-width="1"/><circle cx="107.5" cy="136" r="54" fill="none" stroke="#3b1e08" stroke-width="0.7"/>`;
+        case "F4 - Dashed Frame":    return `<circle cx="107.5" cy="136" r="57" fill="none" stroke="#3b1e08" stroke-width="1.2" stroke-dasharray="4 3"/>`;
+        case "F5 - Corner Marks":    return `<path d="M 65 94 L 75 86 M 150 94 L 140 86 M 65 178 L 75 186 M 150 178 L 140 186" fill="none" stroke="#3b1e08" stroke-width="1.5"/>`;
+        case "F6 - Medallion Ring":  return `<circle cx="107.5" cy="136" r="57" fill="none" stroke="#3b1e08" stroke-width="2.4"/>`;
+        case "F7 - Sparkle Frame":   return `<circle cx="107.5" cy="136" r="57" fill="none" stroke="#3b1e08" stroke-width="1"/><text x="107.5" y="81" text-anchor="middle" fill="#3b1e08" font-size="8.5">✦</text><text x="107.5" y="196" text-anchor="middle" fill="#3b1e08" font-size="8.5">✦</text>`;
+        case "F8 - Keepsake Banner": return `<line x1="65" y1="96" x2="150" y2="96" stroke="#3b1e08" stroke-width="1.2"/><line x1="65" y1="176" x2="150" y2="176" stroke="#3b1e08" stroke-width="1.2"/>`;
       }
     } else if (orient === "Portrait") {
       switch (f) {
-        case "F1 - Classic Line":   return `<rect x="71" y="80" width="73" height="112" rx="5" fill="none" stroke="#3b1e08" stroke-width="1.2"/>`;
-        case "F2 - Polaroid":       return `<rect x="71" y="80" width="73" height="94" rx="4" fill="none" stroke="#3b1e08" stroke-width="1.2"/><text x="107.5" y="187" text-anchor="middle" fill="#3b1e08" font-size="8.5" style="font-family:${fontCss}">${escapeHtml(dt)}</text>`;
-        case "F3 - Double Vintage": return `<rect x="69" y="78" width="77" height="116" rx="6" fill="none" stroke="#3b1e08" stroke-width="1"/><rect x="73" y="82" width="69" height="108" rx="4" fill="none" stroke="#3b1e08" stroke-width="0.7"/>`;
-        case "F4 - Dashed Frame":   return `<rect x="71" y="80" width="73" height="112" rx="5" fill="none" stroke="#3b1e08" stroke-width="1.2" stroke-dasharray="4 3"/>`;
-        case "F5 - Corner Marks":   return `<path d="M 71 94 L 71 80 L 85 80 M 130 80 L 144 80 L 144 94 M 71 178 L 71 192 L 85 192 M 130 192 L 144 192 L 144 178" fill="none" stroke="#3b1e08" stroke-width="1.4"/>`;
-        case "F6 - Medallion Ring": return `<rect x="71" y="80" width="73" height="112" rx="5" fill="none" stroke="#3b1e08" stroke-width="2.4"/>`;
-        case "F7 - Sparkle Frame":  return `<rect x="71" y="80" width="73" height="112" rx="5" fill="none" stroke="#3b1e08" stroke-width="1"/><text x="107.5" y="82" text-anchor="middle" fill="#3b1e08" font-size="8.5">✦</text><text x="107.5" y="195" text-anchor="middle" fill="#3b1e08" font-size="8.5">✦</text>`;
-        case "F8 - Keepsake Banner":return `<line x1="74" y1="90" x2="141" y2="90" stroke="#3b1e08" stroke-width="1.2"/><line x1="74" y1="182" x2="141" y2="182" stroke="#3b1e08" stroke-width="1.2"/>`;
+        case "F1 - Classic Line":    return `<rect x="71" y="80" width="73" height="112" rx="5" fill="none" stroke="#3b1e08" stroke-width="1.2"/>`;
+        case "F2 - Polaroid":        return `<rect x="71" y="80" width="73" height="94" rx="4" fill="none" stroke="#3b1e08" stroke-width="1.2"/><text x="107.5" y="187" text-anchor="middle" fill="#3b1e08" font-size="8.5" style="font-family:${fontCss}">${escapeHtml(dt)}</text>`;
+        case "F3 - Double Vintage":  return `<rect x="69" y="78" width="77" height="116" rx="6" fill="none" stroke="#3b1e08" stroke-width="1"/><rect x="73" y="82" width="69" height="108" rx="4" fill="none" stroke="#3b1e08" stroke-width="0.7"/>`;
+        case "F4 - Dashed Frame":    return `<rect x="71" y="80" width="73" height="112" rx="5" fill="none" stroke="#3b1e08" stroke-width="1.2" stroke-dasharray="4 3"/>`;
+        case "F5 - Corner Marks":    return `<path d="M 71 94 L 71 80 L 85 80 M 130 80 L 144 80 L 144 94 M 71 178 L 71 192 L 85 192 M 130 192 L 144 192 L 144 178" fill="none" stroke="#3b1e08" stroke-width="1.4"/>`;
+        case "F6 - Medallion Ring":  return `<rect x="71" y="80" width="73" height="112" rx="5" fill="none" stroke="#3b1e08" stroke-width="2.4"/>`;
+        case "F7 - Sparkle Frame":   return `<rect x="71" y="80" width="73" height="112" rx="5" fill="none" stroke="#3b1e08" stroke-width="1"/><text x="107.5" y="82" text-anchor="middle" fill="#3b1e08" font-size="8.5">✦</text><text x="107.5" y="195" text-anchor="middle" fill="#3b1e08" font-size="8.5">✦</text>`;
+        case "F8 - Keepsake Banner": return `<line x1="74" y1="90" x2="141" y2="90" stroke="#3b1e08" stroke-width="1.2"/><line x1="74" y1="182" x2="141" y2="182" stroke="#3b1e08" stroke-width="1.2"/>`;
       }
     } else {
       switch (f) {
-        case "F1 - Classic Line":   return `<rect x="70" y="92" width="120" height="72" rx="5" fill="none" stroke="#3b1e08" stroke-width="1.2"/>`;
-        case "F2 - Polaroid":       return `<rect x="70" y="90" width="120" height="58" rx="4" fill="none" stroke="#3b1e08" stroke-width="1.2"/><text x="130" y="161" text-anchor="middle" fill="#3b1e08" font-size="8.5" style="font-family:${fontCss}">${escapeHtml(dt)}</text>`;
-        case "F3 - Double Vintage": return `<rect x="68" y="90" width="124" height="76" rx="6" fill="none" stroke="#3b1e08" stroke-width="1"/><rect x="72" y="94" width="116" height="68" rx="4" fill="none" stroke="#3b1e08" stroke-width="0.7"/>`;
-        case "F4 - Dashed Frame":   return `<rect x="70" y="92" width="120" height="72" rx="5" fill="none" stroke="#3b1e08" stroke-width="1.2" stroke-dasharray="4 3"/>`;
-        case "F5 - Corner Marks":   return `<path d="M 70 105 L 70 92 L 84 92 M 176 92 L 190 92 L 190 105 M 70 151 L 70 164 L 84 164 M 176 164 L 190 164 L 190 151" fill="none" stroke="#3b1e08" stroke-width="1.4"/>`;
-        case "F6 - Medallion Ring": return `<rect x="70" y="92" width="120" height="72" rx="5" fill="none" stroke="#3b1e08" stroke-width="2.4"/>`;
-        case "F7 - Sparkle Frame":  return `<rect x="70" y="92" width="120" height="72" rx="5" fill="none" stroke="#3b1e08" stroke-width="1"/><text x="130" y="94" text-anchor="middle" fill="#3b1e08" font-size="8.5">✦</text><text x="130" y="167" text-anchor="middle" fill="#3b1e08" font-size="8.5">✦</text>`;
-        case "F8 - Keepsake Banner":return `<line x1="76" y1="101" x2="184" y2="101" stroke="#3b1e08" stroke-width="1.2"/><line x1="76" y1="155" x2="184" y2="155" stroke="#3b1e08" stroke-width="1.2"/>`;
+        case "F1 - Classic Line":    return `<rect x="70" y="92" width="120" height="72" rx="5" fill="none" stroke="#3b1e08" stroke-width="1.2"/>`;
+        case "F2 - Polaroid":        return `<rect x="70" y="90" width="120" height="58" rx="4" fill="none" stroke="#3b1e08" stroke-width="1.2"/><text x="130" y="161" text-anchor="middle" fill="#3b1e08" font-size="8.5" style="font-family:${fontCss}">${escapeHtml(dt)}</text>`;
+        case "F3 - Double Vintage":  return `<rect x="68" y="90" width="124" height="76" rx="6" fill="none" stroke="#3b1e08" stroke-width="1"/><rect x="72" y="94" width="116" height="68" rx="4" fill="none" stroke="#3b1e08" stroke-width="0.7"/>`;
+        case "F4 - Dashed Frame":    return `<rect x="70" y="92" width="120" height="72" rx="5" fill="none" stroke="#3b1e08" stroke-width="1.2" stroke-dasharray="4 3"/>`;
+        case "F5 - Corner Marks":    return `<path d="M 70 105 L 70 92 L 84 92 M 176 92 L 190 92 L 190 105 M 70 151 L 70 164 L 84 164 M 176 164 L 190 164 L 190 151" fill="none" stroke="#3b1e08" stroke-width="1.4"/>`;
+        case "F6 - Medallion Ring":  return `<rect x="70" y="92" width="120" height="72" rx="5" fill="none" stroke="#3b1e08" stroke-width="2.4"/>`;
+        case "F7 - Sparkle Frame":   return `<rect x="70" y="92" width="120" height="72" rx="5" fill="none" stroke="#3b1e08" stroke-width="1"/><text x="130" y="94" text-anchor="middle" fill="#3b1e08" font-size="8.5">✦</text><text x="130" y="167" text-anchor="middle" fill="#3b1e08" font-size="8.5">✦</text>`;
+        case "F8 - Keepsake Banner": return `<line x1="76" y1="101" x2="184" y2="101" stroke="#3b1e08" stroke-width="1.2"/><line x1="76" y1="155" x2="184" y2="155" stroke="#3b1e08" stroke-width="1.2"/>`;
       }
     }
     return "";
@@ -456,36 +470,36 @@
     if (b === "B9 - Clean / None") return "";
     if (shape === "Round") {
       switch (b) {
-        case "B1 - Classic Line":     return `<circle cx="107.5" cy="136" r="57" fill="none" stroke="#3b1e08" stroke-width="1.2"/>`;
-        case "B2 - Split Arc/Line":   return `<path d="M 62 101 A 57 57 0 0 1 153 101" fill="none" stroke="#3b1e08" stroke-width="1"/><path d="M 62 171 A 57 57 0 0 0 153 171" fill="none" stroke="#3b1e08" stroke-width="1"/><circle cx="107.5" cy="82" r="1.5" fill="#3b1e08"/>`;
-        case "B3 - Sparkle Frame":    return `<circle cx="107.5" cy="136" r="57" fill="none" stroke="#3b1e08" stroke-width="1"/><text x="107.5" y="82" text-anchor="middle" fill="#3b1e08" font-size="8.5">✦</text><text x="107.5" y="196" text-anchor="middle" fill="#3b1e08" font-size="8.5">✦</text>`;
-        case "B4 - Corner Brackets":  return `<path d="M 72 98 Q 107.5 78 143 98" fill="none" stroke="#3b1e08" stroke-width="1.2"/><path d="M 72 174 Q 107.5 194 143 174" fill="none" stroke="#3b1e08" stroke-width="1.2"/>`;
-        case "B5 - Stitch Border":    return `<circle cx="107.5" cy="136" r="57" fill="none" stroke="#3b1e08" stroke-width="1.2" stroke-dasharray="4 3"/>`;
-        case "B6 - Double Frame":     return `<circle cx="107.5" cy="136" r="59" fill="none" stroke="#3b1e08" stroke-width="1"/><circle cx="107.5" cy="136" r="54" fill="none" stroke="#3b1e08" stroke-width="0.7"/>`;
-        case "B7 - Heart Accent Edge":return `<circle cx="107.5" cy="136" r="57" fill="none" stroke="#3b1e08" stroke-width="1"/><text x="107.5" y="83" text-anchor="middle" fill="#3b1e08" font-size="8">♡</text>`;
-        case "B8 - Minimal Bars":     return `<line x1="78" y1="90" x2="137" y2="90" stroke="#3b1e08" stroke-width="1.4"/><line x1="78" y1="182" x2="137" y2="182" stroke="#3b1e08" stroke-width="1.4"/>`;
+        case "B1 - Classic Line":      return `<circle cx="107.5" cy="136" r="57" fill="none" stroke="#3b1e08" stroke-width="1.2"/>`;
+        case "B2 - Split Arc/Line":    return `<path d="M 62 101 A 57 57 0 0 1 153 101" fill="none" stroke="#3b1e08" stroke-width="1"/><path d="M 62 171 A 57 57 0 0 0 153 171" fill="none" stroke="#3b1e08" stroke-width="1"/><circle cx="107.5" cy="82" r="1.5" fill="#3b1e08"/>`;
+        case "B3 - Sparkle Frame":     return `<circle cx="107.5" cy="136" r="57" fill="none" stroke="#3b1e08" stroke-width="1"/><text x="107.5" y="82" text-anchor="middle" fill="#3b1e08" font-size="8.5">✦</text><text x="107.5" y="196" text-anchor="middle" fill="#3b1e08" font-size="8.5">✦</text>`;
+        case "B4 - Corner Brackets":   return `<path d="M 72 98 Q 107.5 78 143 98" fill="none" stroke="#3b1e08" stroke-width="1.2"/><path d="M 72 174 Q 107.5 194 143 174" fill="none" stroke="#3b1e08" stroke-width="1.2"/>`;
+        case "B5 - Stitch Border":     return `<circle cx="107.5" cy="136" r="57" fill="none" stroke="#3b1e08" stroke-width="1.2" stroke-dasharray="4 3"/>`;
+        case "B6 - Double Frame":      return `<circle cx="107.5" cy="136" r="59" fill="none" stroke="#3b1e08" stroke-width="1"/><circle cx="107.5" cy="136" r="54" fill="none" stroke="#3b1e08" stroke-width="0.7"/>`;
+        case "B7 - Heart Accent Edge": return `<circle cx="107.5" cy="136" r="57" fill="none" stroke="#3b1e08" stroke-width="1"/><text x="107.5" y="83" text-anchor="middle" fill="#3b1e08" font-size="8">♡</text>`;
+        case "B8 - Minimal Bars":      return `<line x1="78" y1="90" x2="137" y2="90" stroke="#3b1e08" stroke-width="1.4"/><line x1="78" y1="182" x2="137" y2="182" stroke="#3b1e08" stroke-width="1.4"/>`;
       }
     } else if (orient === "Portrait") {
       switch (b) {
-        case "B1 - Classic Line":     return `<rect x="71" y="80" width="73" height="112" rx="5" fill="none" stroke="#3b1e08" stroke-width="1.2"/>`;
-        case "B2 - Split Arc/Line":   return `<line x1="75" y1="82" x2="140" y2="82" stroke="#3b1e08" stroke-width="1"/><line x1="75" y1="190" x2="140" y2="190" stroke="#3b1e08" stroke-width="1"/>`;
-        case "B3 - Sparkle Frame":    return `<rect x="71" y="80" width="73" height="112" rx="5" fill="none" stroke="#3b1e08" stroke-width="1"/><text x="71" y="139" text-anchor="middle" fill="#3b1e08" font-size="8.5">✦</text><text x="144" y="139" text-anchor="middle" fill="#3b1e08" font-size="8.5">✦</text>`;
-        case "B4 - Corner Brackets":  return `<path d="M 71 96 L 71 80 L 87 80 M 128 80 L 144 80 L 144 96 M 71 176 L 71 192 L 87 192 M 128 192 L 144 192 L 144 176" fill="none" stroke="#3b1e08" stroke-width="1.3"/>`;
-        case "B5 - Stitch Border":    return `<rect x="71" y="80" width="73" height="112" rx="5" fill="none" stroke="#3b1e08" stroke-width="1.2" stroke-dasharray="4 3"/>`;
-        case "B6 - Double Frame":     return `<rect x="69" y="78" width="77" height="116" rx="6" fill="none" stroke="#3b1e08" stroke-width="1"/><rect x="73" y="82" width="69" height="108" rx="4" fill="none" stroke="#3b1e08" stroke-width="0.7"/>`;
-        case "B7 - Heart Accent Edge":return `<rect x="71" y="80" width="73" height="112" rx="5" fill="none" stroke="#3b1e08" stroke-width="1"/><text x="107.5" y="195" text-anchor="middle" fill="#3b1e08" font-size="8">♡</text>`;
-        case "B8 - Minimal Bars":     return `<line x1="78" y1="88" x2="137" y2="88" stroke="#3b1e08" stroke-width="1.5"/><line x1="78" y1="184" x2="137" y2="184" stroke="#3b1e08" stroke-width="1.5"/>`;
+        case "B1 - Classic Line":      return `<rect x="71" y="80" width="73" height="112" rx="5" fill="none" stroke="#3b1e08" stroke-width="1.2"/>`;
+        case "B2 - Split Arc/Line":    return `<line x1="75" y1="82" x2="140" y2="82" stroke="#3b1e08" stroke-width="1"/><line x1="75" y1="190" x2="140" y2="190" stroke="#3b1e08" stroke-width="1"/>`;
+        case "B3 - Sparkle Frame":     return `<rect x="71" y="80" width="73" height="112" rx="5" fill="none" stroke="#3b1e08" stroke-width="1"/><text x="71" y="139" text-anchor="middle" fill="#3b1e08" font-size="8.5">✦</text><text x="144" y="139" text-anchor="middle" fill="#3b1e08" font-size="8.5">✦</text>`;
+        case "B4 - Corner Brackets":   return `<path d="M 71 96 L 71 80 L 87 80 M 128 80 L 144 80 L 144 96 M 71 176 L 71 192 L 87 192 M 128 192 L 144 192 L 144 176" fill="none" stroke="#3b1e08" stroke-width="1.3"/>`;
+        case "B5 - Stitch Border":     return `<rect x="71" y="80" width="73" height="112" rx="5" fill="none" stroke="#3b1e08" stroke-width="1.2" stroke-dasharray="4 3"/>`;
+        case "B6 - Double Frame":      return `<rect x="69" y="78" width="77" height="116" rx="6" fill="none" stroke="#3b1e08" stroke-width="1"/><rect x="73" y="82" width="69" height="108" rx="4" fill="none" stroke="#3b1e08" stroke-width="0.7"/>`;
+        case "B7 - Heart Accent Edge": return `<rect x="71" y="80" width="73" height="112" rx="5" fill="none" stroke="#3b1e08" stroke-width="1"/><text x="107.5" y="195" text-anchor="middle" fill="#3b1e08" font-size="8">♡</text>`;
+        case "B8 - Minimal Bars":      return `<line x1="78" y1="88" x2="137" y2="88" stroke="#3b1e08" stroke-width="1.5"/><line x1="78" y1="184" x2="137" y2="184" stroke="#3b1e08" stroke-width="1.5"/>`;
       }
     } else {
       switch (b) {
-        case "B1 - Classic Line":     return `<rect x="70" y="92" width="120" height="72" rx="5" fill="none" stroke="#3b1e08" stroke-width="1.2"/>`;
-        case "B2 - Split Arc/Line":   return `<line x1="76" y1="94" x2="184" y2="94" stroke="#3b1e08" stroke-width="1"/><line x1="76" y1="162" x2="184" y2="162" stroke="#3b1e08" stroke-width="1"/>`;
-        case "B3 - Sparkle Frame":    return `<rect x="70" y="92" width="120" height="72" rx="5" fill="none" stroke="#3b1e08" stroke-width="1"/><text x="130" y="95" text-anchor="middle" fill="#3b1e08" font-size="8.5">✦</text><text x="130" y="167" text-anchor="middle" fill="#3b1e08" font-size="8.5">✦</text>`;
-        case "B4 - Corner Brackets":  return `<path d="M 70 108 L 70 92 L 86 92 M 174 92 L 190 92 L 190 108 M 70 148 L 70 164 L 86 164 M 174 164 L 190 164 L 190 148" fill="none" stroke="#3b1e08" stroke-width="1.3"/>`;
-        case "B5 - Stitch Border":    return `<rect x="70" y="92" width="120" height="72" rx="5" fill="none" stroke="#3b1e08" stroke-width="1.2" stroke-dasharray="4 3"/>`;
-        case "B6 - Double Frame":     return `<rect x="68" y="90" width="124" height="76" rx="6" fill="none" stroke="#3b1e08" stroke-width="1"/><rect x="72" y="94" width="116" height="68" rx="4" fill="none" stroke="#3b1e08" stroke-width="0.7"/>`;
-        case "B7 - Heart Accent Edge":return `<rect x="70" y="92" width="120" height="72" rx="5" fill="none" stroke="#3b1e08" stroke-width="1"/><text x="130" y="167" text-anchor="middle" fill="#3b1e08" font-size="8">♡</text>`;
-        case "B8 - Minimal Bars":     return `<line x1="80" y1="99" x2="180" y2="99" stroke="#3b1e08" stroke-width="1.5"/><line x1="80" y1="157" x2="180" y2="157" stroke="#3b1e08" stroke-width="1.5"/>`;
+        case "B1 - Classic Line":      return `<rect x="70" y="92" width="120" height="72" rx="5" fill="none" stroke="#3b1e08" stroke-width="1.2"/>`;
+        case "B2 - Split Arc/Line":    return `<line x1="76" y1="94" x2="184" y2="94" stroke="#3b1e08" stroke-width="1"/><line x1="76" y1="162" x2="184" y2="162" stroke="#3b1e08" stroke-width="1"/>`;
+        case "B3 - Sparkle Frame":     return `<rect x="70" y="92" width="120" height="72" rx="5" fill="none" stroke="#3b1e08" stroke-width="1"/><text x="130" y="95" text-anchor="middle" fill="#3b1e08" font-size="8.5">✦</text><text x="130" y="167" text-anchor="middle" fill="#3b1e08" font-size="8.5">✦</text>`;
+        case "B4 - Corner Brackets":   return `<path d="M 70 108 L 70 92 L 86 92 M 174 92 L 190 92 L 190 108 M 70 148 L 70 164 L 86 164 M 174 164 L 190 164 L 190 148" fill="none" stroke="#3b1e08" stroke-width="1.3"/>`;
+        case "B5 - Stitch Border":     return `<rect x="70" y="92" width="120" height="72" rx="5" fill="none" stroke="#3b1e08" stroke-width="1.2" stroke-dasharray="4 3"/>`;
+        case "B6 - Double Frame":      return `<rect x="68" y="90" width="124" height="76" rx="6" fill="none" stroke="#3b1e08" stroke-width="1"/><rect x="72" y="94" width="116" height="68" rx="4" fill="none" stroke="#3b1e08" stroke-width="0.7"/>`;
+        case "B7 - Heart Accent Edge": return `<rect x="70" y="92" width="120" height="72" rx="5" fill="none" stroke="#3b1e08" stroke-width="1"/><text x="130" y="167" text-anchor="middle" fill="#3b1e08" font-size="8">♡</text>`;
+        case "B8 - Minimal Bars":      return `<line x1="80" y1="99" x2="180" y2="99" stroke="#3b1e08" stroke-width="1.5"/><line x1="80" y1="157" x2="180" y2="157" stroke="#3b1e08" stroke-width="1.5"/>`;
       }
     }
     return "";
@@ -541,13 +555,11 @@
         </linearGradient>
       </defs>`;
 
-    // Front SVG (uses frontOrient)
     const frontGeo = buildBodyAndHardware(state.shape, state.frontOrient);
     const frontOverlay = getFrontOverlay(state.shape, state.frontOrient, state.front, fontCss, dt);
     const photoPlaceholder = `<text x="${frontGeo.cx}" y="${frontGeo.photoY}" text-anchor="middle" fill="#5c3415" font-size="9.5" opacity="0.72">[ YOUR PHOTO ]</text>`;
     document.getElementById('frontSvg').innerHTML = woodDefs + frontGeo.hardware + frontGeo.body + frontOverlay + photoPlaceholder;
 
-    // Back SVG (uses backOrient)
     const backGeo = buildBodyAndHardware(state.shape, state.backOrient);
     const items = [];
     const baseText = isScript ? 13.5 : 11;
@@ -581,7 +593,7 @@
   }
 
   function escapeHtml(str) {
-    return str.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+    return String(str || "").replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
   }
 
   function openAcknowledgement() {
