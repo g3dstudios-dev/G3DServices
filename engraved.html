@@ -597,6 +597,101 @@
     return "";
   }
 
+  function renderBackDividers(shape, orient, dividerStyle) {
+    const color = "#3b1e08";
+
+    // Draws a horizontal divider centered at (0, 0) with total span `w`
+    function dividerShape(w) {
+      const hw = w / 2;
+      const star = (x, y, s = 1) =>
+        `<path d="M ${x} ${y - 5.5 * s} Q ${x} ${y} ${x + 5.5 * s} ${y} Q ${x} ${y} ${x} ${y + 5.5 * s} Q ${x} ${y} ${x - 5.5 * s} ${y} Q ${x} ${y} ${x} ${y - 5.5 * s} Z" fill="${color}"/>`;
+
+      switch (dividerStyle) {
+        case "D1 - Sparkle Line":
+          return `
+            <circle cx="${-hw}" cy="0" r="1.4" fill="${color}"/>
+            <line x1="${-hw + 4}" y1="0" x2="-8" y2="0" stroke="${color}" stroke-width="0.9"/>
+            ${star(0, 0, 0.95)}
+            <line x1="8" y1="0" x2="${hw - 4}" y2="0" stroke="${color}" stroke-width="0.9"/>
+            <circle cx="${hw}" cy="0" r="1.4" fill="${color}"/>`;
+
+        case "D2 - Ornate Diamond":
+          return `
+            <line x1="${-hw}" y1="0" x2="-12" y2="0" stroke="${color}" stroke-width="1"/>
+            <polygon points="0,-4.5 4.5,0 0,4.5 -4.5,0" fill="${color}"/>
+            <circle cx="-8.5" cy="0" r="1.5" fill="${color}"/>
+            <circle cx="8.5" cy="0" r="1.5" fill="${color}"/>
+            <line x1="12" y1="0" x2="${hw}" y2="0" stroke="${color}" stroke-width="1"/>`;
+
+        case "D3 - Botanical Leaf":
+          return `
+            <line x1="${-hw}" y1="0" x2="-18" y2="0" stroke="${color}" stroke-width="1"/>
+            <circle cx="-14" cy="0" r="1.2" fill="${color}"/>
+            <path d="M -11 0 Q -7 -4 -3 0 Q -7 4 -11 0 Z" fill="none" stroke="${color}" stroke-width="0.8"/>
+            <polygon points="0,-3 3,0 0,3 -3,0" fill="none" stroke="${color}" stroke-width="0.9"/>
+            <path d="M 3 0 Q 7 -4 11 0 Q 7 4 3 0 Z" fill="none" stroke="${color}" stroke-width="0.8"/>
+            <circle cx="14" cy="0" r="1.2" fill="${color}"/>
+            <line x1="18" y1="0" x2="${hw}" y2="0" stroke="${color}" stroke-width="1"/>`;
+
+        case "D4 - Heart Rule":
+          return `
+            <line x1="${-hw}" y1="0" x2="-9" y2="0" stroke="${color}" stroke-width="1.4"/>
+            <path d="M 0 3.8 C -5.5 0.2 -5.5 -4.2 -2.2 -4.2 C -0.8 -4.2 0 -3.1 0 -3.1 C 0 -3.1 0.8 -4.2 2.2 -4.2 C 5.5 -4.2 5.5 0.2 0 3.8 Z" fill="${color}"/>
+            <line x1="9" y1="0" x2="${hw}" y2="0" stroke="${color}" stroke-width="1.4"/>`;
+
+        case "D5 - Twin Sparkles":
+          return `
+            <line x1="${-hw}" y1="0" x2="${hw - 20}" y2="0" stroke="${color}" stroke-width="1.1"/>
+            ${star(hw - 12, 0, 0.95)}
+            <circle cx="${hw - 6.5}" cy="0" r="1.1" fill="${color}"/>
+            ${star(hw - 1.5, 0, 0.65)}`;
+
+        case "D6 - Geometric Line":
+          return `
+            <polygon points="${-hw},0 ${-hw + 3.5},-2.2 ${-hw + 6},0 ${-hw + 3.5},2.2" fill="${color}"/>
+            <line x1="${-hw + 6}" y1="0" x2="-7" y2="0" stroke="${color}" stroke-width="0.8"/>
+            <polygon points="0,-3 3.5,0 0,3 -3.5,0" fill="none" stroke="${color}" stroke-width="0.9"/>
+            <line x1="7" y1="0" x2="${hw - 6}" y2="0" stroke="${color}" stroke-width="0.8"/>
+            <polygon points="${hw},0 ${hw - 3.5},-2.2 ${hw - 6},0 ${hw - 3.5},2.2" fill="${color}"/>`;
+
+        case "D7 - Double Beaded":
+          return `
+            <line x1="${-hw}" y1="-1.6" x2="${hw}" y2="-1.6" stroke="${color}" stroke-width="0.7"/>
+            <line x1="${-hw}" y1="1.6" x2="${hw}" y2="1.6" stroke="${color}" stroke-width="0.7"/>
+            <polygon points="0,-3.2 2.8,0 0,3.2 -2.8,0" fill="${color}"/>
+            <circle cx="${-hw * 0.45}" cy="-1.6" r="1.2" fill="${color}"/>
+            <circle cx="${hw * 0.45}" cy="-1.6" r="1.2" fill="${color}"/>`;
+
+        case "D8 - Starburst Finial":
+        default:
+          return `
+            <line x1="${-hw}" y1="0" x2="-8" y2="0" stroke="${color}" stroke-width="0.9"/>
+            <circle cx="0" cy="-5.5" r="1.1" fill="${color}"/>
+            ${star(0, 0, 0.95)}
+            <circle cx="0" cy="5.5" r="1.1" fill="${color}"/>
+            <line x1="8" y1="0" x2="${hw}" y2="0" stroke="${color}" stroke-width="0.9"/>`;
+      }
+    }
+
+    // Rectangle Portrait: place rotated dividers along left & right edges like vertical quote layout
+    if (shape === "Rectangle" && orient === "Portrait") {
+      return `
+        <g transform="translate(77, 136) rotate(90)">${dividerShape(74)}</g>
+        <g transform="translate(138, 136) rotate(90)">${dividerShape(74)}</g>`;
+    }
+
+    // Round or Rectangle Landscape: place dividers cleanly above & below text
+    if (shape === "Round") {
+      return `
+        <g transform="translate(107.5, 96)">${dividerShape(54)}</g>
+        <g transform="translate(107.5, 176)">${dividerShape(54)}</g>`;
+    }
+
+    return `
+      <g transform="translate(130, 102)">${dividerShape(76)}</g>
+      <g transform="translate(130, 160)">${dividerShape(76)}</g>`;
+  }
+
   function getShapeAndOrientationLabel() {
     if (state.shape === "Round") return "Round Wood";
     return `Rectangle Wood (Front: ${state.frontOrient} | Back: ${state.backOrient})`;
