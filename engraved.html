@@ -18,15 +18,15 @@
     --accent-hover: #be123c;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { max-width: 100%; overflow-x: hidden; }
-  body { background: var(--bg); color: var(--text); font-family: 'Montserrat', sans-serif; padding: 14px; line-height: 1.45; }
+  html, body { max-width: 100%; overflow-x: clip; }
+  body { background: var(--bg); color: var(--text); font-family: 'Montserrat', sans-serif; padding: 12px; line-height: 1.45; }
   .container { width: 100%; max-width: 1140px; margin: 0 auto; }
-  header { text-align: center; padding-bottom: 16px; border-bottom: 1px solid var(--border); margin-bottom: 18px; }
-  header h1 { font-size: clamp(1.15rem, 4.5vw, 1.55rem); letter-spacing: 0.8px; text-transform: uppercase; font-weight: 800; }
+  header { text-align: center; padding-bottom: 14px; border-bottom: 1px solid var(--border); margin-bottom: 14px; }
+  header h1 { font-size: clamp(1.1rem, 4.4vw, 1.55rem); letter-spacing: 0.8px; text-transform: uppercase; font-weight: 800; }
   header h1 span { color: var(--accent); }
-  header p { color: var(--muted); font-size: 0.82rem; margin-top: 4px; }
+  header p { color: var(--muted); font-size: 0.8rem; margin-top: 4px; }
 
-  .grid { display: grid; grid-template-columns: 1fr; gap: 18px; }
+  .grid { display: grid; grid-template-columns: 1fr; gap: 16px; align-items: start; }
   @media (min-width: 900px) {
     body { padding: 20px; }
     .grid { grid-template-columns: 1fr 1.22fr; gap: 24px; }
@@ -35,17 +35,65 @@
   .panel { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 14px; min-width: 0; }
   @media (min-width: 600px) { .panel { padding: 20px; } }
 
-  .preview-box { display: flex; flex-direction: column; align-items: center; }
-  @media (min-width: 900px) { .preview-box { position: sticky; top: 20px; } }
+  /* Full Preview Card (Normal flow at top, sticky on wide desktop) */
+  .preview-box {
+    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+    padding: 14px; display: flex; flex-direction: column; align-items: center;
+  }
+  @media (min-width: 900px) {
+    .preview-box { position: sticky; top: 20px; padding: 18px; }
+  }
 
   .preview-stage {
-    width: 100%; min-height: 220px; background: #22252a; border-radius: 10px;
-    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
-    padding: 12px; border: 1px dashed var(--border); align-items: center; justify-items: center;
+    width: 100%; min-height: 200px; background: #22252a; border-radius: 10px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    padding: 14px; border: 1px dashed var(--border); align-items: center; justify-items: center;
   }
-  .preview-card { width: 100%; max-width: 195px; text-align: center; }
+  .preview-card { width: 100%; max-width: 175px; text-align: center; }
   .preview-card svg { width: 100%; height: auto; display: block; }
-  .side-label { font-size: 0.68rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.6px; text-align: center; margin-top: 4px; }
+  .side-label { font-size: 0.66rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.6px; text-align: center; margin-top: 4px; }
+
+  /* Detached Floating Mini-Preview Bar (Appears ONLY when scrolled past main preview) */
+  .floating-preview {
+    position: fixed; top: 8px; left: 50%;
+    transform: translate(-50%, -130%);
+    opacity: 0; pointer-events: none;
+    width: calc(100% - 24px); max-width: 480px;
+    background: rgba(24, 26, 30, 0.96);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 8px 10px;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.7);
+    z-index: 80;
+    transition: transform 0.22s ease, opacity 0.2s ease;
+  }
+  .floating-preview.visible {
+    transform: translate(-50%, 0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .floating-stage {
+    position: relative;
+    background: #22252a;
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+    display: flex; justify-content: center; align-items: center; gap: 16px;
+    padding: 6px 86px 6px 12px;
+  }
+  .mini-card { width: 84px; text-align: center; }
+  .mini-card svg { width: 100%; height: auto; display: block; }
+  .mini-label { font-size: 0.56rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.4px; margin-top: 1px; }
+
+  .btn-proceed-mini {
+    position: absolute; right: 8px; bottom: 8px;
+    background: var(--accent); color: #fff; border: none;
+    padding: 6px 10px; border-radius: 6px;
+    font-weight: 800; font-size: 0.66rem; letter-spacing: 0.4px;
+    text-transform: uppercase; cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.45);
+  }
+  .btn-proceed-mini:hover { background: var(--accent-hover); }
 
   .group { margin-bottom: 16px; }
   .group.hidden { display: none; }
@@ -77,20 +125,20 @@
 
   .summary-card {
     width: 100%; background: #111317; border: 1px solid var(--border);
-    border-radius: 8px; padding: 10px 12px; margin-top: 12px; font-size: 0.74rem;
+    border-radius: 8px; padding: 10px 12px; margin-top: 12px; font-size: 0.72rem;
   }
   .summary-card code { color: #f87171; font-family: 'Courier Prime', monospace; display: block; margin-top: 4px; word-break: break-word; }
 
   .actions { display: grid; grid-template-columns: 1fr; gap: 8px; width: 100%; margin-top: 12px; }
   @media (min-width: 480px) { .actions { grid-template-columns: 1fr 1fr; gap: 10px; } }
   .btn-primary {
-    background: var(--accent); color: #fff; border: none; padding: 12px; border-radius: 8px;
-    font-weight: 800; font-size: 0.78rem; cursor: pointer; text-transform: uppercase;
+    background: var(--accent); color: #fff; border: none; padding: 11px; border-radius: 8px;
+    font-weight: 800; font-size: 0.76rem; cursor: pointer; text-transform: uppercase;
   }
   .btn-primary:hover { background: var(--accent-hover); }
   .btn-secondary {
-    background: #272a30; color: #fff; border: 1px solid var(--border); padding: 12px;
-    border-radius: 8px; font-weight: 600; font-size: 0.78rem; cursor: pointer;
+    background: #272a30; color: #fff; border: 1px solid var(--border); padding: 11px;
+    border-radius: 8px; font-weight: 600; font-size: 0.76rem; cursor: pointer;
   }
   .btn-secondary:hover { background: #32363e; }
 
@@ -127,6 +175,21 @@
 </head>
 <body>
 
+<!-- DETACHED FLOATING MINI-PREVIEW (ONLY VISIBLE WHEN SCROLLED PAST MAIN PREVIEW) -->
+<div class="floating-preview" id="floatingPreview" aria-hidden="true">
+  <div class="floating-stage">
+    <div class="mini-card">
+      <svg id="miniFrontSvg" viewBox="0 0 215 225"></svg>
+      <div class="mini-label">Front</div>
+    </div>
+    <div class="mini-card">
+      <svg id="miniBackSvg" viewBox="0 0 215 225"></svg>
+      <div class="mini-label">Back</div>
+    </div>
+    <button type="button" class="btn-proceed-mini" onclick="submitToGoogleForm()">Proceed →</button>
+  </div>
+</div>
+
 <div class="container">
   <header>
     <h1><span>G3D</span> Studios — Wood Keychain Customizer</h1>
@@ -134,8 +197,8 @@
   </header>
 
   <div class="grid">
-    <!-- LEFT: LIVE PREVIEW -->
-    <div class="panel preview-box">
+    <!-- LEFT: FULL PREVIEW CARD (ATTACHED AT TOP) -->
+    <div class="preview-box" id="mainPreviewBox">
       <div class="preview-stage">
         <div class="preview-card">
           <svg id="frontSvg" viewBox="0 0 215 225"></svg>
@@ -153,8 +216,8 @@
       </div>
 
       <div class="actions">
-        <button class="btn-secondary" onclick="openAcknowledgement()">Preview Summary Slip</button>
-        <button class="btn-primary" onclick="submitToGoogleForm()">Proceed to Order Form →</button>
+        <button type="button" class="btn-secondary" onclick="openAcknowledgement()">Preview Summary Slip</button>
+        <button type="button" class="btn-primary" onclick="submitToGoogleForm()">Proceed to Order Form →</button>
       </div>
     </div>
 
@@ -163,77 +226,77 @@
       <div class="group">
         <label class="title">1. Keychain Shape</label>
         <div class="btn-grid" data-group="shape">
-          <button class="opt-btn active" data-val="Round">Round Wood<small>Natural Beechwood • Metal Ring</small></button>
-          <button class="opt-btn" data-val="Rectangle">Rectangle Wood<small>Natural Beechwood • Leather Strap</small></button>
+          <button type="button" class="opt-btn active" data-val="Round">Round Wood<small>Natural Beechwood • Metal Ring</small></button>
+          <button type="button" class="opt-btn" data-val="Rectangle">Rectangle Wood<small>Natural Beechwood • Leather Strap</small></button>
         </div>
       </div>
 
       <div class="group hidden" id="rectOrientGroup">
         <label class="title">1B. Rectangle Front &amp; Back Orientation</label>
         <div class="btn-grid" style="margin-bottom:8px;" data-group="frontOrient">
-          <button class="opt-btn active" data-val="Portrait">Front: Portrait<small>Vertical photo</small></button>
-          <button class="opt-btn" data-val="Landscape">Front: Landscape<small>Horizontal photo</small></button>
+          <button type="button" class="opt-btn active" data-val="Portrait">Front: Portrait<small>Vertical photo</small></button>
+          <button type="button" class="opt-btn" data-val="Landscape">Front: Landscape<small>Horizontal photo</small></button>
         </div>
         <div class="btn-grid" data-group="backOrient">
-          <button class="opt-btn active" data-val="Portrait">Back: Portrait<small>Vertical text layout</small></button>
-          <button class="opt-btn" data-val="Landscape">Back: Landscape<small>Horizontal text layout</small></button>
+          <button type="button" class="opt-btn active" data-val="Portrait">Back: Portrait<small>Vertical text layout</small></button>
+          <button type="button" class="opt-btn" data-val="Landscape">Back: Landscape<small>Horizontal text layout</small></button>
         </div>
       </div>
 
       <div class="group">
         <label class="title">2. Front Photo Style (F1–F9)</label>
         <div class="btn-grid" data-group="front">
-          <button class="opt-btn active" data-val="F1 - Classic Line">F1 - Classic Line<small>Single border frame</small></button>
-          <button class="opt-btn" data-val="F2 - Polaroid">F2 - Polaroid<small>Photo + mini date</small></button>
-          <button class="opt-btn" data-val="F3 - Double Vintage">F3 - Double Vintage<small>Inner &amp; outer line</small></button>
-          <button class="opt-btn" data-val="F4 - Dashed Frame">F4 - Dashed Frame<small>Stitched outline</small></button>
-          <button class="opt-btn" data-val="F5 - Corner Marks">F5 - Corner Marks<small>4 framing brackets</small></button>
-          <button class="opt-btn" data-val="F6 - Medallion Ring">F6 - Medallion Ring<small>Thick accent ring</small></button>
-          <button class="opt-btn" data-val="F7 - Sparkle Frame">F7 - Sparkle Frame<small>Line + 4-point stars</small></button>
-          <button class="opt-btn" data-val="F8 - Keepsake Banner">F8 - Keepsake Banner<small>Top &amp; bottom bars</small></button>
-          <button class="opt-btn" data-val="F9 - Borderless">F9 - Borderless<small>Clean open edge</small></button>
+          <button type="button" class="opt-btn active" data-val="F1 - Classic Line">F1 - Classic Line<small>Single border frame</small></button>
+          <button type="button" class="opt-btn" data-val="F2 - Polaroid">F2 - Polaroid<small>Photo + mini date</small></button>
+          <button type="button" class="opt-btn" data-val="F3 - Double Vintage">F3 - Double Vintage<small>Inner &amp; outer line</small></button>
+          <button type="button" class="opt-btn" data-val="F4 - Dashed Frame">F4 - Dashed Frame<small>Stitched outline</small></button>
+          <button type="button" class="opt-btn" data-val="F5 - Corner Marks">F5 - Corner Marks<small>4 framing brackets</small></button>
+          <button type="button" class="opt-btn" data-val="F6 - Medallion Ring">F6 - Medallion Ring<small>Thick accent ring</small></button>
+          <button type="button" class="opt-btn" data-val="F7 - Sparkle Frame">F7 - Sparkle Frame<small>Line + 4-point stars</small></button>
+          <button type="button" class="opt-btn" data-val="F8 - Keepsake Banner">F8 - Keepsake Banner<small>Top &amp; bottom bars</small></button>
+          <button type="button" class="opt-btn" data-val="F9 - Borderless">F9 - Borderless<small>Clean open edge</small></button>
         </div>
       </div>
 
       <div class="group">
         <label class="title">3. Back Border Design (B1–B9)</label>
         <div class="btn-grid" data-group="border">
-          <button class="opt-btn active" data-val="B1 - Classic Line">B1 - Classic Line<small>Single border frame</small></button>
-          <button class="opt-btn" data-val="B2 - Split Arc/Line">B2 - Split Arc/Line<small>Top &amp; bottom rules</small></button>
-          <button class="opt-btn" data-val="B3 - Sparkle Frame">B3 - Sparkle Frame<small>Border + stars</small></button>
-          <button class="opt-btn" data-val="B4 - Corner Brackets">B4 - Corner Brackets<small>Open center space</small></button>
-          <button class="opt-btn" data-val="B5 - Stitch Border">B5 - Stitch Border<small>Dashed perimeter</small></button>
-          <button class="opt-btn" data-val="B6 - Double Frame">B6 - Double Frame<small>Inner &amp; outer line</small></button>
-          <button class="opt-btn" data-val="B7 - Heart Accent Edge">B7 - Heart Accent Edge<small>Frame + heart mark</small></button>
-          <button class="opt-btn" data-val="B8 - Minimal Bars">B8 - Minimal Bars<small>Top &amp; bottom bars</small></button>
-          <button class="opt-btn" data-val="B9 - Clean / None">B9 - Clean / None<small>Plain wood finish</small></button>
+          <button type="button" class="opt-btn active" data-val="B1 - Classic Line">B1 - Classic Line<small>Single border frame</small></button>
+          <button type="button" class="opt-btn" data-val="B2 - Split Arc/Line">B2 - Split Arc/Line<small>Top &amp; bottom rules</small></button>
+          <button type="button" class="opt-btn" data-val="B3 - Sparkle Frame">B3 - Sparkle Frame<small>Border + stars</small></button>
+          <button type="button" class="opt-btn" data-val="B4 - Corner Brackets">B4 - Corner Brackets<small>Open center space</small></button>
+          <button type="button" class="opt-btn" data-val="B5 - Stitch Border">B5 - Stitch Border<small>Dashed perimeter</small></button>
+          <button type="button" class="opt-btn" data-val="B6 - Double Frame">B6 - Double Frame<small>Inner &amp; outer line</small></button>
+          <button type="button" class="opt-btn" data-val="B7 - Heart Accent Edge">B7 - Heart Accent Edge<small>Frame + heart mark</small></button>
+          <button type="button" class="opt-btn" data-val="B8 - Minimal Bars">B8 - Minimal Bars<small>Top &amp; bottom bars</small></button>
+          <button type="button" class="opt-btn" data-val="B9 - Clean / None">B9 - Clean / None<small>Plain wood finish</small></button>
         </div>
       </div>
 
       <div class="group">
         <label class="title">4. Font Style (T1–T9)</label>
         <div class="btn-grid" data-group="font">
-          <button class="opt-btn active" data-val="T1 - Brush Script" style="font-family:'Caveat Brush',cursive; font-size:0.92rem;">T1 - Brush Script<small>Casual &amp; bold</small></button>
-          <button class="opt-btn" data-val="T2 - Calligraphy" style="font-family:'Great Vibes',cursive; font-size:1.02rem;">T2 - Calligraphy<small>Elegant script</small></button>
-          <button class="opt-btn" data-val="T3 - Classic Serif" style="font-family:'Playfair Display',serif;">T3 - Classic Serif<small>Editorial serif</small></button>
-          <button class="opt-btn" data-val="T4 - Minimal Sans" style="font-family:'Montserrat',sans-serif;">T4 - Minimal Sans<small>Clean geometric</small></button>
-          <button class="opt-btn" data-val="T5 - Typewriter" style="font-family:'Courier Prime',monospace;">T5 - Typewriter<small>Vintage mono</small></button>
-          <button class="opt-btn" data-val="T6 - Bold Block" style="font-family:'Oswald',sans-serif;">T6 - Bold Block<small>Tall condensed</small></button>
-          <button class="opt-btn" data-val="T7 - Roman Serif" style="font-family:'Cinzel',serif;">T7 - Roman Serif<small>Formal caps</small></button>
-          <button class="opt-btn" data-val="T8 - Retro Script" style="font-family:'Pacifico',cursive; font-size:0.9rem;">T8 - Retro Script<small>Rounded cursive</small></button>
-          <button class="opt-btn" data-val="T9 - Marker Hand" style="font-family:'Kalam',cursive; font-size:0.88rem;">T9 - Marker Hand<small>Natural handwriting</small></button>
+          <button type="button" class="opt-btn active" data-val="T1 - Brush Script" style="font-family:'Caveat Brush',cursive; font-size:0.92rem;">T1 - Brush Script<small>Casual &amp; bold</small></button>
+          <button type="button" class="opt-btn" data-val="T2 - Calligraphy" style="font-family:'Great Vibes',cursive; font-size:1.02rem;">T2 - Calligraphy<small>Elegant script</small></button>
+          <button type="button" class="opt-btn" data-val="T3 - Classic Serif" style="font-family:'Playfair Display',serif;">T3 - Classic Serif<small>Editorial serif</small></button>
+          <button type="button" class="opt-btn" data-val="T4 - Minimal Sans" style="font-family:'Montserrat',sans-serif;">T4 - Minimal Sans<small>Clean geometric</small></button>
+          <button type="button" class="opt-btn" data-val="T5 - Typewriter" style="font-family:'Courier Prime',monospace;">T5 - Typewriter<small>Vintage mono</small></button>
+          <button type="button" class="opt-btn" data-val="T6 - Bold Block" style="font-family:'Oswald',sans-serif;">T6 - Bold Block<small>Tall condensed</small></button>
+          <button type="button" class="opt-btn" data-val="T7 - Roman Serif" style="font-family:'Cinzel',serif;">T7 - Roman Serif<small>Formal caps</small></button>
+          <button type="button" class="opt-btn" data-val="T8 - Retro Script" style="font-family:'Pacifico',cursive; font-size:0.9rem;">T8 - Retro Script<small>Rounded cursive</small></button>
+          <button type="button" class="opt-btn" data-val="T9 - Marker Hand" style="font-family:'Kalam',cursive; font-size:0.88rem;">T9 - Marker Hand<small>Natural handwriting</small></button>
         </div>
       </div>
 
       <div class="group">
         <label class="title">5. Center Accent Icon</label>
         <div class="btn-grid" data-group="icon">
-          <button class="opt-btn active" data-val="I1 - Outline Heart (♡)">I1 - Outline Heart (♡)</button>
-          <button class="opt-btn" data-val="I2 - Solid Heart (♥)">I2 - Solid Heart (♥)</button>
-          <button class="opt-btn" data-val="I3 - Sparkle (✦)">I3 - Sparkle (✦)</button>
-          <button class="opt-btn" data-val="I4 - Infinity (∞)">I4 - Infinity (∞)</button>
-          <button class="opt-btn" data-val="I5 - Paw Print (🐾)">I5 - Paw Print (🐾)</button>
-          <button class="opt-btn" data-val="None">None (+1 Line &amp; Space)</button>
+          <button type="button" class="opt-btn active" data-val="I1 - Outline Heart (♡)">I1 - Outline Heart (♡)</button>
+          <button type="button" class="opt-btn" data-val="I2 - Solid Heart (♥)">I2 - Solid Heart (♥)</button>
+          <button type="button" class="opt-btn" data-val="I3 - Sparkle (✦)">I3 - Sparkle (✦)</button>
+          <button type="button" class="opt-btn" data-val="I4 - Infinity (∞)">I4 - Infinity (∞)</button>
+          <button type="button" class="opt-btn" data-val="I5 - Paw Print (🐾)">I5 - Paw Print (🐾)</button>
+          <button type="button" class="opt-btn" data-val="None">None (+1 Line &amp; Space)</button>
         </div>
       </div>
 
@@ -282,8 +345,8 @@
       Click <strong>"Proceed to Order Form"</strong> below, upload your photo &amp; payment proof, and enter your email address to receive your <strong>PDF Acknowledgement Receipt</strong>.
     </div>
     <div style="display:flex; gap:8px; margin-top:12px; position:relative; z-index:2;">
-      <button class="btn-secondary" style="flex:1;" onclick="closeAck()">Edit Design</button>
-      <button class="btn-primary" style="flex:1;" onclick="submitToGoogleForm()">Proceed to Order Form →</button>
+      <button type="button" class="btn-secondary" style="flex:1;" onclick="closeAck()">Edit Design</button>
+      <button type="button" class="btn-primary" style="flex:1;" onclick="submitToGoogleForm()">Proceed to Order Form →</button>
     </div>
   </div>
 </div>
@@ -334,6 +397,21 @@
     "I5 - Paw Print (🐾)":    "🐾",
     "None":                   ""
   };
+
+  // Detach / Re-attach floating mini-preview when scrolling past mainPreviewBox
+  const mainPreviewBox = document.getElementById('mainPreviewBox');
+  const floatingPreview = document.getElementById('floatingPreview');
+
+  function updateFloatingVisibility() {
+    const rect = mainPreviewBox.getBoundingClientRect();
+    // Show floating bar once the main preview card scrolls above the top of the screen
+    const shouldFloat = rect.bottom < 40;
+    floatingPreview.classList.toggle('visible', shouldFloat);
+    floatingPreview.setAttribute('aria-hidden', String(!shouldFloat));
+  }
+
+  window.addEventListener('scroll', updateFloatingVisibility, { passive: true });
+  window.addEventListener('resize', updateFloatingVisibility, { passive: true });
 
   document.querySelectorAll('.btn-grid').forEach(grid => {
     grid.addEventListener('click', e => {
@@ -558,7 +636,10 @@
     const frontGeo = buildBodyAndHardware(state.shape, state.frontOrient);
     const frontOverlay = getFrontOverlay(state.shape, state.frontOrient, state.front, fontCss, dt);
     const photoPlaceholder = `<text x="${frontGeo.cx}" y="${frontGeo.photoY}" text-anchor="middle" fill="#5c3415" font-size="9.5" opacity="0.72">[ YOUR PHOTO ]</text>`;
-    document.getElementById('frontSvg').innerHTML = woodDefs + frontGeo.hardware + frontGeo.body + frontOverlay + photoPlaceholder;
+    const frontMarkup = woodDefs + frontGeo.hardware + frontGeo.body + frontOverlay + photoPlaceholder;
+
+    document.getElementById('frontSvg').innerHTML = frontMarkup;
+    document.getElementById('miniFrontSvg').innerHTML = frontMarkup;
 
     const backGeo = buildBodyAndHardware(state.shape, state.backOrient);
     const items = [];
@@ -589,7 +670,10 @@
     }
 
     const backBorder = getBackBorder(state.shape, state.backOrient, state.border);
-    document.getElementById('backSvg').innerHTML = woodDefs + backGeo.hardware + backGeo.body + backBorder + textNodes;
+    const backMarkup = woodDefs + backGeo.hardware + backGeo.body + backBorder + textNodes;
+
+    document.getElementById('backSvg').innerHTML = backMarkup;
+    document.getElementById('miniBackSvg').innerHTML = backMarkup;
   }
 
   function escapeHtml(str) {
@@ -616,6 +700,7 @@
 
   updateLimits();
   render();
+  updateFloatingVisibility();
 </script>
 </body>
 </html>
