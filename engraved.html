@@ -253,7 +253,7 @@
           <button type="button" class="opt-btn" data-val="F5 - Corner Marks">F5 - Corner Marks<small>4 framing brackets</small></button>
           <button type="button" class="opt-btn" data-val="F6 - Medallion Ring">F6 - Medallion Ring<small>Thick accent ring</small></button>
           <button type="button" class="opt-btn" data-val="F7 - Sparkle Frame">F7 - Sparkle Frame<small>Line + 4-point stars</small></button>
-          <button type="button" class="opt-btn" data-val="F8 - Keepsake Banner">F8 - Keepsake Banner<small>Top &amp; bottom bars</small></button>
+          <button type="button" class="opt-btn" data-val="F8 - Split Arc/Line">F8 - Keepsake Banner<small>Top &amp; bottom bars</small></button>
           <button type="button" class="opt-btn" data-val="F9 - Borderless">F9 - Borderless<small>Clean open edge</small></button>
         </div>
       </div>
@@ -530,7 +530,7 @@
         case "F5 - Corner Marks":    return `<path d="M 65 94 L 75 86 M 150 94 L 140 86 M 65 178 L 75 186 M 150 178 L 140 186" fill="none" stroke="#3b1e08" stroke-width="1.5"/>`;
         case "F6 - Medallion Ring":  return `<circle cx="107.5" cy="136" r="57" fill="none" stroke="#3b1e08" stroke-width="2.4"/>`;
         case "F7 - Sparkle Frame":   return `<circle cx="107.5" cy="136" r="57" fill="none" stroke="#3b1e08" stroke-width="1"/><text x="107.5" y="81" text-anchor="middle" fill="#3b1e08" font-size="8.5">✦</text><text x="107.5" y="196" text-anchor="middle" fill="#3b1e08" font-size="8.5">✦</text>`;
-        case "F8 - Keepsake Banner": return `<line x1="65" y1="96" x2="150" y2="96" stroke="#3b1e08" stroke-width="1.2"/><line x1="65" y1="176" x2="150" y2="176" stroke="#3b1e08" stroke-width="1.2"/>`;
+        case "F8 - Split Arc/Line":    return `<path d="M 62 101 A 57 57 0 0 1 153 101" fill="none" stroke="#3b1e08" stroke-width="1"/><path d="M 62 171 A 57 57 0 0 0 153 171" fill="none" stroke="#3b1e08" stroke-width="1"/><circle cx="107.5" cy="82" r="1.5" fill="#3b1e08"/>`;
       }
     } else if (orient === "Portrait") {
       switch (f) {
@@ -541,7 +541,7 @@
         case "F5 - Corner Marks":    return `<path d="M 71 94 L 71 80 L 85 80 M 130 80 L 144 80 L 144 94 M 71 178 L 71 192 L 85 192 M 130 192 L 144 192 L 144 178" fill="none" stroke="#3b1e08" stroke-width="1.4"/>`;
         case "F6 - Medallion Ring":  return `<rect x="71" y="80" width="73" height="112" rx="5" fill="none" stroke="#3b1e08" stroke-width="2.4"/>`;
         case "F7 - Sparkle Frame":   return `<rect x="71" y="80" width="73" height="112" rx="5" fill="none" stroke="#3b1e08" stroke-width="1"/><text x="107.5" y="82" text-anchor="middle" fill="#3b1e08" font-size="8.5">✦</text><text x="107.5" y="195" text-anchor="middle" fill="#3b1e08" font-size="8.5">✦</text>`;
-        case "F8 - Keepsake Banner": return `<line x1="74" y1="90" x2="141" y2="90" stroke="#3b1e08" stroke-width="1.2"/><line x1="74" y1="182" x2="141" y2="182" stroke="#3b1e08" stroke-width="1.2"/>`;
+        case "F8 - Split Arc/Line":    return `<line x1="75" y1="82" x2="140" y2="82" stroke="#3b1e08" stroke-width="1"/><line x1="75" y1="190" x2="140" y2="190" stroke="#3b1e08" stroke-width="1"/>`;
       }
     } else {
       switch (f) {
@@ -552,7 +552,7 @@
         case "F5 - Corner Marks":    return `<path d="M 70 105 L 70 92 L 84 92 M 176 92 L 190 92 L 190 105 M 70 151 L 70 164 L 84 164 M 176 164 L 190 164 L 190 151" fill="none" stroke="#3b1e08" stroke-width="1.4"/>`;
         case "F6 - Medallion Ring":  return `<rect x="70" y="92" width="120" height="72" rx="5" fill="none" stroke="#3b1e08" stroke-width="2.4"/>`;
         case "F7 - Sparkle Frame":   return `<rect x="70" y="92" width="120" height="72" rx="5" fill="none" stroke="#3b1e08" stroke-width="1"/><text x="130" y="94" text-anchor="middle" fill="#3b1e08" font-size="8.5">✦</text><text x="130" y="167" text-anchor="middle" fill="#3b1e08" font-size="8.5">✦</text>`;
-        case "F8 - Keepsake Banner": return `<line x1="76" y1="101" x2="184" y2="101" stroke="#3b1e08" stroke-width="1.2"/><line x1="76" y1="155" x2="184" y2="155" stroke="#3b1e08" stroke-width="1.2"/>`;
+        case "F8 - Split Arc/Line":    return `<line x1="76" y1="94" x2="184" y2="94" stroke="#3b1e08" stroke-width="1"/><line x1="76" y1="162" x2="184" y2="162" stroke="#3b1e08" stroke-width="1"/>`;
       }
     }
     return "";
